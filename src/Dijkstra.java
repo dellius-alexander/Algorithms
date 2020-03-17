@@ -104,21 +104,18 @@
  *************************************************************************************************/
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Dijkstra 
+public class Dijkstra
 {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public final static int INF = 9999;
+    public final static int INF = 99999;
     private static Logger log = Logger.getLogger("Dijkstra");
-    
-    
+
+
     /**********************************************************************************************
      * Default Constructor
      *********************************************************************************************/
@@ -128,125 +125,94 @@ public class Dijkstra
      * @param graph
      * @param startNode
      **********************************************************************************************/
-    public Dijkstra(Integer graph[][], Integer startNode)
+    public void DijkstraAlgorithm(Integer graph[][], Integer startNode)
     {
-        log.setLevel(Level.INFO);
-        int S = startNode-1;
-        int V = graph.length;
-        int N = 0;  // node number
-        int i = 0;  // from node
-        int j = 0;  // to node
-        int k = 0;  // current node
-        // identifies the location of edges found and stores the location value at this 
-        // position in the array
-        int l = 0; 
-        // settledNodes: is the "shortest path tree" set of nodes evaluated to have the shortest 
-        // path from source node edge nodes of length(s) w(i,j)
-        // initially it is empty but we will fill it up as we evaluate each node
-        Hashtable<String, Integer[][]> settledNodes = new Hashtable<String, Integer[][]>(); 
-        // unsettledNodes: is the set of nodes not yet evaluated
-        // we will initialize this table with all values in the graph and remove them
-        // as they are evaluated and eventually settled
-        Hashtable<String, Integer[]> unsettledNodes = new Hashtable<String, Integer[]>();
-        // Create a hash table of visible nodes from any settled, parent or root node;
-        // these nodes are removed from view as they are settled in the shortest path
-        // from root
-        Hashtable<String, Integer> frontier = new Hashtable<String, Integer>();
-        Integer nextShortestPathNode = 0;
-        // Represents a single node and the weighted edges from its self (parent) to leaf nodes
-        Integer[] node = null;
-        List<Integer[][]> results = new ArrayList<Integer[][]>();
-        Integer[][] setNodes = new Integer[V][V];
-        String key="";
-         // Get all weights of all nodes that have an edge of this parent node
-         for (i = 0; i < V; i++) 
-         { // represents from node
-            node = new Integer[V];
-            for (j = 0; j < V; j++) 
-            {  // represents to nodes                
-                node[j] = graph[i][j];
-            }
-            //System.out.println(printNode(node));
-            key = (i+1)+"";
-            unsettledNodes.put(key,node);
-        }
-       printHash_1D(unsettledNodes);
-        
+        //log.setLevel(Level.INFO);
+
         /**
-         *  1.  Start at the "ROOT" node; it has no parent so it will be 
-         *          labeled as Root; the distance from Root to itself is "0"
+         * First we will create the basis of the algorithm
+         *  we have to initilaize several values to hold specific
+         *  parameters to help us find the shortest path through the graph
          */
-        // Initialize all distances/weights in the settledNodes to INFINITY, assign a value of "0"
-        // from the root node to itself and settle the root node
+        Integer V = graph.length;                           // The total number of nodes in our graph
+        Integer count = V;
+        Integer minimumValue = 99999;                       // Represents the weight/distance of the shortest edge node
+        Integer nextNodeShortestPathToTraverse = 0;         // Represents the node with the next best shortest path
+        Integer[][] settledNodes = new Integer[V][V];       // Settled Nodes according to the best shortest path
+        Integer[][] unsettledNodes = new Integer[V][V];     // Unsettled Nodes not visible from the frontier
+        Integer[] frontier  = new Integer[V];          // Nodes on the frontier
+        Integer S = startNode-1;                              // Represents our START NODE
+        // i = source node, j = destination node of distance(i,j) | weight(i,j)
+        Integer i = 0, j = 0, k = 0;
+        Integer N = 0;                                      // Next node to traverse
+        Integer val = 0;
+        //   {INF, 1, 7, 5},      // 1
+        //   {1, INF, INF, 3},    // 2
+        //   {7, INF, INF, 2},    // 3
+        //   {5, 3, 2, INF}};     // 4
+        if (count == V){
+            // initialize everything to INFINITY
             for (i = 0; i < V; i++) {
                 for (j = 0; j < V; j++) {
-                    if (i == S && j == S) {
-                        setNodes[i][j] = 0;
-                        log.info((i + 1) + " to " + (j + 1) + " = " + 0);
-                    } else if (i == S && j != S) {
-                        frontier.put((j + 1) + "", graph[i][j]);
-                        setNodes[i][j] = graph[i][j];
-                    } else {
-                        setNodes[i][j] = INF;
-                    }
+                    settledNodes[i][j] = INF;
+                    unsettledNodes[i][j] = INF;
                 }
             }
-        //System.out.println(frontier);
-        //System.out.println(printResults(setNodes));
-
-
-        /*
-         * 2.  After settling our starting node we need to look around
-         *      on the frontier and find the smallest weighted edge.
-         *      The node at that edge will be the shortest next path
-         *      to traverse along the graph.  For this graph we started
-         *      node "1" and the visible nodes (aka frontier nodes)
-         *      are "2=1, 3=7 & 4=5"; the next shortest path to traverse
-         *      will be node "2" at a distance of "1"
-         */
-
-            nextShortestPathNode = nextShortestPath(frontier);
-            System.out.println(frontier);
-            System.out.println(nextShortestPathNode);
-
-
-            frontier.remove("2");
-            System.out.println(frontier);
-
-            frontier.putAll(nodesOnFrontier(S, nextShortestPathNode, unsettledNodes));
-            System.out.println(frontier);
-
-            printHash_1D(unsettledNodes);
-
-/*
-
-
-        System.out.println("\n\n");      
-        String keyName ="Settled Node "+(S+1);
-        settledNodes.put(keyName, setNodes);
-        System.out.println(settledNodes.keys().nextElement() +"\n");
-        printResults(settledNodes.get(keyName));
-        keyName ="Settled Node "+3;
-        settledNodes.put(keyName, graph);
-        System.out.println(settledNodes.keys().nextElement() +"\n");
-        printResults(settledNodes.get(keyName));
-        System.out.println("\n\n");
-        results.add(setNodes);
-        System.out.println("\n\n");
-       
-        
-       // Iterable arr = element.asIterator();
-        while (el.hasMoreElements()) {
-            String key = el.nextElement().toString();
-            System.out.println(key + " " + frontier.get(key));
         }
-        System.out.println(frontier);
-        //System.out.println((frontier.keys().nextElement()) + "  "+ frontier.get(elem));
-        System.out.println("\n\n")
-        
+        log.info("\tUnsettled Nodes:=> "+Arrays.deepToString(unsettledNodes));
+        log.info("\tSettled Nodes:=> "+Arrays.deepToString(settledNodes));
+        /**
+         * Start the settling process
+         */
+        for (i = 0; i < V; i++) {
+            for (j = 0; j < V; j++) {
+                /**
+                 * Here we capture all nodes and allow the processing
+                 * below to remove nodes from the pool of
+                 * unsettled nodes
+                 */
+                unsettledNodes[i][j] = graph[i][j];
+                /**
+                 * Here is were we settle the current parent or root node
+                 */
+                if (i==S){  // capture all values of the current settling
+
+                    unsettledNodes[i][j] = INF;
+                    settledNodes[i][j] = graph[i][j];
+                    if (i==S && i==j){  // granular: Set to infinity when node looking at self
+                        settledNodes[i][j] = INF;
+                        if (count == V){  // keep count of how many times we need to iterate to find the shortest path
+                            settledNodes[i][j] = 0;
+                        }
+                    }
+                    /**
+                     * Here we capture the node with the shortest edge in the frontier
+                     * of the node currently being settled
+                     */
+                    if(minimumValue  >=  graph[i][j]) { // Find the next shortest path/edge node
+                        minimumValue = graph[i][j];
+                        nextNodeShortestPathToTraverse = j;
+                        settledNodes[i][j] = graph[i][j];
+                        for (k = 0; k < V; k++) {
+                            frontier[k] = graph[i][k];
+                        }
+                    }   // End of find our shortest edge
+                } // End of SETTLING
+            }   // End of inner for/j
+            log.info("=>\tUnsettled Node: "+Arrays.deepToString(unsettledNodes));
+            log.info("=>\tSettled Node: "+Arrays.deepToString(settledNodes));
+            log.info("=>\tFrontier Node: "+Arrays.deepToString(frontier));
+        }   // End of outer for/i
+        System.out.println("\n\n");
+        log.info("=>\tUnsettled Node: "+Arrays.deepToString(unsettledNodes));
+        log.info("=>\tSettled Node: "+Arrays.deepToString(settledNodes));
+        log.info("=>\tFrontier Node: "+Arrays.deepToString(frontier));
+/*
+        while(count > 0){
+            count--;
+            DijkstraAlgorithm(unsettledNodes,nextNodeShortestPathToTraverse);
+        }
 */
-       
-           
     }
     /**
      * Removes a object pair from our hashtable and you provide
@@ -302,7 +268,7 @@ public class Dijkstra
      */
     public Hashtable<String, Integer> nodesOnFrontier(Integer root, Integer parentNode, Hashtable<String, Integer[]> hash)
     {
-       Hashtable<String, Integer> frontier = new Hashtable<>();
+        Hashtable<String, Integer> frontier = new Hashtable<>();
         int i = 0;
         String key = "";
         Integer[] val = null;
@@ -317,7 +283,7 @@ public class Dijkstra
             }
             else if(Integer.parseInt(key) == parentNode )
             {
-                    val = hash.get(key);
+                val = hash.get(key);
                 for (int j = 0; j < val.length; j++) {
                     if(val[j] != INF && j != root && j != parentNode){
                         frontier.put((j+1)+"",val[j]);
@@ -370,9 +336,9 @@ public class Dijkstra
     public void printHash_1D(Hashtable<String, Integer[]> hash){
         String key = null;
         Enumeration ky = hash.keys();
-        while (ky.hasMoreElements()) 
+        while (ky.hasMoreElements())
         {
-            key = ky.nextElement().toString();      
+            key = ky.nextElement().toString();
             System.out.print(key);
             System.out.println(printNode(hash.get(key)));
 
@@ -386,38 +352,38 @@ public class Dijkstra
     public void printHash_2D(Hashtable<String, Integer[][]> hash){
         String key = null;
         Enumeration ky = hash.keys();
-        while (ky.hasMoreElements()) 
+        while (ky.hasMoreElements())
         {
-            key = ky.nextElement().toString();      
+            key = ky.nextElement().toString();
             System.out.print(key);
             System.out.println(printResults(hash.get(key)));
 
         }
 
     }
-     /***********************************************************************************************************************
+    /***********************************************************************************************************************
      * Print results set
      * @param graph    The results set
      **********************************************************************************************************************/
     public String printResults(Integer[][] graph)
     {
-       
+
         int V = graph.length;
         int i = 0, j = 0;
         String rst = "";
         rst = String.format("\n");
-        rst = String.format("-----------------------------");       
-        for ( i = 0; i < V; i++) 
-        {                
-            for ( j = 0; j < V; j++) 
+        rst = String.format("-----------------------------");
+        for ( i = 0; i < V; i++)
+        {
+            for ( j = 0; j < V; j++)
             {
-            rst = String.format("| %-5d",(j < V ? graph[i][j]:""));
+                rst = String.format("| %-5d", graph[i][j]);
             }
             rst = String.format("|");
             rst = String.format("-----------------------------");
         }
-        rst = String.format("\n\n");   
-        return rst;  
+        rst = String.format("\n\n");
+        return rst;
     }
     /**
      * prints the edges of a node
@@ -429,15 +395,15 @@ public class Dijkstra
         int j = 0;
         String rst = "";
         rst += String.format("\n");
-        rst += String.format("-----------------------------\n");            
-        for ( j = 0; j < V; j++) 
+        rst += String.format("-----------------------------\n");
+        for ( j = 0; j < V; j++)
         {
             rst += String.format("| %-5d",(j < V ? node[j]:""));
         }
         rst += String.format("|\n");
         rst += String.format("-----------------------------\n");
-        rst += String.format("\n\n");   
-        return rst;  
+        rst += String.format("\n\n");
+        return rst;
     }
     /*****************************************************************************************
      * Locate the alphabed representation of the number give up to letter "M"
@@ -448,34 +414,34 @@ public class Dijkstra
     {
         String alpha ="";
         switch (num) {
-            case 0:      alpha = "A"; 
-                        break;
+            case 0:      alpha = "A";
+                break;
             case 1:      alpha = "B";
-                        break;
+                break;
             case 2:      alpha = "C";
-                        break;
+                break;
             case 3:      alpha = "D";
-                        break;
+                break;
             case 4:      alpha = "E";
-                        break;
+                break;
             case 5:      alpha = "F";
-                        break;
-            case 6:      alpha = "G"; 
-                        break;
+                break;
+            case 6:      alpha = "G";
+                break;
             case 7:      alpha = "H";
-                        break;
+                break;
             case 8:      alpha = "I";
-                        break;
+                break;
             case 9:      alpha = "J";
-                        break;
+                break;
             case 10:     alpha = "K";
-                        break;
+                break;
             case 11:     alpha = "L";
-                        break;
+                break;
             case 12:     alpha = "M";
-                        break;
+                break;
             default:   alpha = "Error: Sorry your range is out of bounds...";
-                        break;
+                break;
         }
         return alpha;
     }
@@ -488,34 +454,34 @@ public class Dijkstra
     {
         String number ="";
         switch (chr) {
-            case 'A':     number = "0"; 
-                        break;
+            case 'A':     number = "0";
+                break;
             case 'B':     number = "1";
-                        break;
+                break;
             case 'C':     number = "2";
-                        break;
+                break;
             case 'D':     number = "3";
-                        break;
+                break;
             case 'E':     number = "4";
-                        break;
+                break;
             case 'F':     number = "5";
-                        break;
-            case 'G':     number = "6"; 
-                        break;
+                break;
+            case 'G':     number = "6";
+                break;
             case 'H':     number = "7";
-                        break;
+                break;
             case 'I':     number = "8";
-                        break;
+                break;
             case 'J':     number = "9";
-                        break;
+                break;
             case 'K':    number = "10";
-                        break;
+                break;
             case 'L':    number = "11";
-                        break;
+                break;
             case 'M':    number = "12";
-                        break;
+                break;
             default:    number = "Error: Sorry your range is out of bounds...";
-                        break;
+                break;
         }
         return Integer.parseInt(number);
     }
@@ -523,15 +489,16 @@ public class Dijkstra
 
     public static void main(String[] args)
     {
-                              // A , B , C , D 
-                              // 1 , 2 , 3 , 4  
+                                // A , B , C , D
+                                // 1 , 2 , 3 , 4
         Integer[][] graph = {   {INF, 1, 7, 5},      // 1
                                 {1, INF, INF, 3},    // 2
                                 {7, INF, INF, 2},    // 3
                                 {5, 3, 2, INF}};     // 4
 
-        Dijkstra dj = new Dijkstra(graph, 1);
-        
+        Dijkstra dj = new Dijkstra();
+        dj.DijkstraAlgorithm(graph,1);
+
 
     }
 }
