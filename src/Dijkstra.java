@@ -207,12 +207,12 @@ public class Dijkstra
         log.info("=>\tUnsettled Node: "+Arrays.deepToString(unsettledNodes));
         log.info("=>\tSettled Node: "+Arrays.deepToString(settledNodes));
         log.info("=>\tFrontier Node: "+Arrays.deepToString(frontier));
-/*
+
         while(count > 0){
             count--;
             DijkstraAlgorithm(unsettledNodes,nextNodeShortestPathToTraverse);
         }
-*/
+
     }
     /**
      * Removes a object pair from our hashtable and you provide
