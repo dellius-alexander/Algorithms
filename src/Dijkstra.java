@@ -148,7 +148,7 @@ public class Dijkstra
         // we will initialize this table with all values in the graph and remove them
         // as they are evaluated and eventually settled
         Hashtable<String, Integer[]> unsettledNodes = new Hashtable<String, Integer[]>();
-        // Create a hash table of visable nodes from any settled, parent or root node;
+        // Create a hash table of visible nodes from any settled, parent or root node;
         // these nodes are removed from view as they are settled in the shortest path
         // from root
         Hashtable<String, Integer> frontier = new Hashtable<String, Integer>();
@@ -297,7 +297,7 @@ public class Dijkstra
      * Get the next set of nodes to be added to the frontier
      * @param root
      * @param parentNode
-     * @param graph
+     * @param hash
      * @return
      */
     public Hashtable<String, Integer> nodesOnFrontier(Integer root, Integer parentNode, Hashtable<String, Integer[]> hash)
