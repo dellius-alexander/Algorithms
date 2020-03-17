@@ -11,13 +11,12 @@ import java.util.logging.Logger;
 public class Dijkstra 
 {
 
-    /** ***********************************************************************************************
+    /** ************************************************************************************************
      * The Dijkstra's algorithm is by far the best shortest path algorithm
      * This program illustrates the algorithm and program control flow of the data structure
      * @author Dellius Alexander
-     *************************************************************************************************/
-    /** ***********************************************************************************************
-     * ALGORITHM: Dijkstra’s Algorithm. 
+     *
+     * ALGORITHM: Dijkstra’s Algorithm
      * (G = Graph: weighted connected simple graph, with all weights positive) 
      * {G has vertices a = v_0, v_1,… , v_n = z and lengths w(v_i , v_j ) 
      *      where w(v_i , v_j ) = ∞ if {v_i , v_j } is not an edge in G} 
@@ -34,9 +33,7 @@ public class Dijkstra
      *          {this adds a vertex to S with minimal label and updates the 
      *          labels of vertices not in S} 
      * return L(z) {L(z) = length of a shortest path from a to z}
-     *************************************************************************************************/
-
-    /** 
+     * *************************************************************************************************
      * Dijkstra's Algorithm:  Key Ideas 
      * We keep track of two sets of nodes.  One set of nodes is settled, the 
      * other set is on the frontier.  Terminology varies; these are my recommendations.  
@@ -63,11 +60,9 @@ public class Dijkstra
      * Step 4:  Instead of full paths, we keep a "parent/intermediate" for each node;  
      *          tracking back through these "parents/intermediate" nodes gives us the
      *          shortest path from start;
-     * 
-     * 
-     * 
-     */
-    /**
+     *
+     * *************************************************************************************************
+     *
      * DETAILED STEP BY STEP:
      *  ■ EDGE: is defined as a connection between two nodes
      *  ■ Frontier: is defined as any unsettled node that is "a visible edge from a settled 
@@ -133,7 +128,7 @@ public class Dijkstra
      ****************************************************************************************/
     public Dijkstra(){}
     /****************************************************************************************
-     * 
+     * Dijkstra Algorihm
      * @param graph
      * @param startNode
      ****************************************************************************************/
@@ -189,28 +184,28 @@ public class Dijkstra
         // from the root node to itself and settle the root node
             for (i = 0; i < V; i++) {
                 for (j = 0; j < V; j++) {
-                    if (i==S && j==S) {                        
+                    if (i == S && j == S) {
                         setNodes[i][j] = 0;
-                        log.info((i+1)+" to "+(j+1)+" = "+0);
-                    } else if(i==S && j!=S) {
-                        frontier.put((j+1)+"",graph[i][j]);
-                        setNodes[i][j] = graph[i][j];                    
-                    }
-                    else{
+                        log.info((i + 1) + " to " + (j + 1) + " = " + 0);
+                    } else if (i == S && j != S) {
+                        frontier.put((j + 1) + "", graph[i][j]);
+                        setNodes[i][j] = graph[i][j];
+                    } else {
                         setNodes[i][j] = INF;
                     }
-                }  
-
+                }
             }
-            System.out.println(frontier);
-            
-            /**
-             * 2.  After settling our starting node we need to look around 
-             *      on the frontier and find the smallest weighted edge.  
-             *      The node at that edge will be the shortest next path
-             *      to treverse along the graph.  For this graph we started 
-             *      node "1" and the visible nodes (aka frontier nodes)
-             *      are "2=1, 3=7 & 4=5"; the next shortest path to traverse 
+        //System.out.println(frontier);
+        //System.out.println(printResults(setNodes));
+
+
+        /**
+         * 2.  After settling our starting node we need to look around
+         *      on the frontier and find the smallest weighted edge.
+         *      The node at that edge will be the shortest next path
+         *      to treverse along the graph.  For this graph we started
+         *      node "1" and the visible nodes (aka frontier nodes)
+         *      are "2=1, 3=7 & 4=5"; the next shortest path to traverse
              *      will be node "2" at a distance of "1"
              *
             Enumeration el = frontier.keys();

@@ -130,79 +130,85 @@ public class FloydWarshall
         {
             for ( i = 0; i < V; i++) 
             {
-                for ( j = 0; j < V; j++) 
-                {
+                for ( j = 0; j < V; j++) {
                     // capture our results set of each unlocking
-                    resultsSet[N][i][j] = (distance[i][N-1] + distance[N-1][j] < distance[i][j] ? (distance[i][N-1] + distance[N-1][j]): distance[i][j]);
+                    resultsSet[N][i][j] = (distance[i][N - 1] + distance[N - 1][j] < distance[i][j] ? (distance[i][N - 1] + distance[N - 1][j]) : distance[i][j]);
                     // unlock current itteraton/node recurrsively
-                    distance[i][j] = (distance[i][N-1] + distance[N-1][j] < distance[i][j] ? (distance[i][N-1] + distance[N-1][j]): distance[i][j]);
+                    distance[i][j] = (distance[i][N - 1] + distance[N - 1][j] < distance[i][j] ? (distance[i][N - 1] + distance[N - 1][j]) : distance[i][j]);
                 }
             }
         }
         return true;
     }
-    /***********************************************************************************************************************
-     * Print results set
-     **********************************************************************************************************************/
-    public void printResults()
-    {
-        int V = resultsSet.length;
-        int N, i, j;
-       System.out.println("\n");
-        for ( N = 0; N < V; N++) 
-        {
-            System.out.println((N == 0 ? "Original Graph: \n\n":"Unlocking Node " + N + ": \n\n"));
-            for ( i = 0; i < V; i++) 
-            {
-                for ( j = 0; j < V; j++) 
-                {
-                    System.out.print((j < V ? " | " + this.resultsSet[N][i][j]:" | "+this.resultsSet[N][i][j]+" | "));
-                }
-                System.out.println(" |");
-            }
-            System.out.println("\n\n");
-        }
-    }
-    /***********************************************************************************************************************
-     * Print results set
-     * @param resultsSet    The results set
-     **********************************************************************************************************************/
-    public void printResults(Integer[][][] resultsSet)
-    {
-       
-        int V = resultsSet.length;
-        int N, i, j;
-        System.out.println("\n");
-        for ( N = 0; N < V; N++) 
-        {
-            System.out.println((N == 0 ? "Original Graph: \n\n":"Unlocking Node " + N + ": \n\n"));
-            for ( i = 0; i < V-1; i++) 
-            {
-                for ( j = 0; j < V-1; j++) 
-                {
-                    System.out.print((j < V ? " | " + resultsSet[N][i][j]:""));
-                }
-                System.out.println(" |");
-            }
-            System.out.println("\n\n");
-        }
-    }
+
     /***********************************************************************************************************************
      * Main Method
      * @param args
      **********************************************************************************************************************/
-    public static void main(String[] args) 
-    {    
-        
-        Integer[][] root_graph = {  {0, 3, INF, 5, INF, 2},
-                                    {3, 0, 7, INF, INF, INF},
-                                    {INF, 7, 0, 4, 13, 12},
-                                    {5, INF, 4, 0, 15, INF},
-                                    {INF, INF, 13, 15, 0, 19},
-                                    {2, INF, 12, INF, 19, 0} };
-        FloydWarshall fw = new FloydWarshall();
-        fw.floyd_Warshall_Algorithm_Weighted(root_graph);
-        fw.printResults(fw.resultsSet);
+    public static void main(String[] args) {
+
+        Integer[][] root_graph = {{0, 3, INF, 5, INF, 2},
+                {3, 0, 7, INF, INF, INF},
+                {INF, 7, 0, 4, 13, 12},
+                {5, INF, 4, 0, 15, INF},
+                {INF, INF, 13, 15, 0, 19},
+                {2, INF, 12, INF, 19, 0}};
+        FloydWarshall fw = new FloydWarshall(root_graph);
+        fw.floyd_Warshall_Algorithm_Weighted();
+        fw.printResults();
+        //fw.floyd_Warshall_Algorithm_Weighted(root_graph);
+        //fw.printResults(fw.resultsSet);
+    }
+
+    /***********************************************************************************************************************
+     * Print results set
+     **********************************************************************************************************************/
+    public void printResults() {
+        int N, i, j;
+        String border = "";
+        for (int k = 0; k < V; k++) {
+            border += "---------";
+        }
+        System.out.println("\n");
+        for (N = 0; N < V; N++) {
+            System.out.println((N == 0 ? "Original Graph: \n\n" : "Unlocking Node " + N + ": \n\n"));
+            for (i = 0; i < V; i++) {
+                System.out.println(border + "-");
+                for (j = 0; j < V; j++) {
+                    System.out.format("|%5s   ", this.resultsSet[N][i][j].toString());
+                }
+                System.out.println("|");
+            }
+            System.out.println(border + "-");
+            System.out.println("\n\n");
+        }
+    }
+
+    /***********************************************************************************************************************
+     * Print results set
+     * @param resultsSet    The results set
+     **********************************************************************************************************************/
+    public void printResults(Integer[][][] resultsSet) {
+
+        int V = resultsSet.length;
+        int N, i, j;
+        String border = "";
+        for (int k = 0; k < V; k++) {
+            border += "---------";
+        }
+        System.out.println("\n");
+        for (N = 0; N < V; N++) {
+            System.out.println((N == 0 ? "Original Graph: \n\n" : "Unlocking Node " + N + ": \n\n"));
+            for (i = 0; i < V - 1; i++) {
+                System.out.println(border + "-");
+                for (j = 0; j < V - 1; j++) {
+                    System.out.format("|%5s   ", resultsSet[N][i][j].toString());
+                }
+                System.out.println("|");
+            }
+            System.out.println(border + "-");
+            System.out.println("\n\n");
+        }
     }
 }
         
