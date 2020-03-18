@@ -133,84 +133,89 @@ public class Dijkstra
          *  we have to initilaize several values to hold specific
          *  parameters to help us find the shortest path through the graph
          */
-        Integer V = graph.length;                           // The total number of nodes in our graph
-        Integer count = V;
+        Integer V = 0, count = 0, itt = 0;
+        V = itt = graph.length;                             // The total number of nodes in our graph
         Integer minimumValue = 99999;                       // Represents the weight/distance of the shortest edge node
         Integer nextNodeShortestPathToTraverse = 0;         // Represents the node with the next best shortest path
         Integer[][] settledNodes = new Integer[V][V];       // Settled Nodes according to the best shortest path
         Integer[][] unsettledNodes = new Integer[V][V];     // Unsettled Nodes not visible from the frontier
-        Integer[] frontier = new Integer[V];          // Nodes on the frontier
-        Integer S = startNode - 1;                              // Represents our START NODE
+        Integer[][] frontier = new Integer[V][V];           // Nodes on the frontier
+        Integer S = startNode;                              // Represents our START NODE
         // i = source node, j = destination node of distance(i,j) | weight(i,j)
         Integer i = 0, j = 0, k = 0;
-        Integer N = 0;                                      // Next node to traverse
+        Integer N = 0, L = 0;                                      // Next node to traverse
         Integer val = 0;
         //   {INF, 1, 7, 5},      // 1
         //   {1, INF, INF, 3},    // 2
         //   {7, INF, INF, 2},    // 3
         //   {5, 3, 2, INF}};     // 4
 
-            // initialize everything to INFINITY
+        if (count == V){
+            // initialize our container values to INFINITY, root = 0,
+            // capture the initial frontier
             for (i = 0; i < V; i++) {
                 for (j = 0; j < V; j++) {
                     settledNodes[i][j] = INF;
-                    unsettledNodes[i][j] = INF;
-                    frontier[j] = INF;
+                    if (count == V && i == j && j == 0){
+                        settledNodes[i][j] = 0;
+                        frontier[i][j] = INF;
+                    }
+                    else if (i == S){
+                        frontier[i][j] = graph[i][j];
+                    }
+                    else{
+                        frontier[i][j] = INF;
+                    }
+                    if (i == S){
+                        unsettledNodes[i][j] = INF;
+                    }
+                    else{
+                        unsettledNodes[i][j] = graph[i][j];
+                    }
+                    if (graph[i][j] != INF){
+                        count++;
+                    }
+
                 }
             }
             log.info("\tUnsettled Nodes:=> " + Arrays.deepToString(unsettledNodes));
             log.info("\tSettled Nodes:=> " + Arrays.deepToString(settledNodes));
             log.info("\tFrontier Nodes:=> " + Arrays.deepToString(frontier));
-            /**
-             * Start the settling process
-             */
-            for (i = 0; i < V; i++) {
+        }
+
+        if (count != V){ // Now we check the frontier to whats next to settle
+            for (i = S; i < V; i++) {
                 for (j = 0; j < V; j++) {
-                    /**
-                     * Here we capture all nodes and allow the processing
-                     * below to remove nodes from the pool of
-                     * unsettled nodes
-                     */
-                    unsettledNodes[i][j] = graph[i][j];
-                    /**
-                     * Here is were we settle the current parent or root node
-                     */
-                    if (i == S) {  // capture all values of the current settling
-                        unsettledNodes[i][j] = INF;
-                        settledNodes[i][j] = graph[i][j];
-                        if (i == S && i == j) {  // granular: Set to infinity when node looking at self
-                            settledNodes[i][j] = INF;
-                        }
-                    }   // End of SETTLING
-                    /*
-                     * Here we capture the node with the shortest edge in the frontier
-                     * of the node currently being settled
-                     */
-                    if (minimumValue > unsettledNodes[i][j]) {  // Find the next shortest path/edge node
-                        minimumValue = graph[i][j];
-                        nextNodeShortestPathToTraverse = N = i;
-                    }   // End of find our shortest edge
-
-                    if (count == V && i == S && j == 0) {  // keep count of how many times we need to iterate to find the shortest path
-                        settledNodes[i][j] = 0;
+                    if (i == nextNodeShortestPathToTraverse){
+                        settledNodes[i][j] = (graph[i][j] <= settledNodes[i][j] ? graph[i][j]: settledNodes[i][j]);
                     }
-                }   // End of FIRST inner for/j
-            }   // End of outer for/i
-
-
-            for (j = 0; j < V; j++){   // We now capture what is on our frontier and
-                frontier[j] = graph[N][j];
+                }
             }
-
-            System.out.println("\n\n");
-            log.info("=>\tUnsettled Node: " + Arrays.deepToString(unsettledNodes));
-            log.info("=>\tSettled Node: " + Arrays.deepToString(settledNodes));
-            log.info("=>\tFrontier Node: " + Arrays.deepToString(frontier));
-
-            while (count > 0) {
-                count--;
-                //DijkstraAlgorithm(unsettledNodes,nextNodeShortestPathToTraverse);
+        }
+        /*
+         * In this step we will find the he next shortest path
+         */
+        for (i = 0; i < V; i++) {  // Finding the shortest next path node
+            if (i == 0){
+                minimumValue = INF;
             }
+            for (j = 0; j < V; j++) {
+                /*
+                 * Here we capture the node with the shortest edge in the frontier
+                 * of the node currently being settled
+                 */
+                if (minimumValue >= frontier[i][j]) {  // Find the next shortest path/edge node
+                    minimumValue = frontier[i][j];
+                    nextNodeShortestPathToTraverse = N = L= j;
+                }   // End of find our shortest edge
+                log.info("[193]"+N+"");
+            }
+        }
+        while (count != 2){
+        count--;
+        DijkstraAlgorithm(unsettledNodes,nextNodeShortestPathToTraverse);
+        }
+
 
     }
     /**
@@ -496,7 +501,7 @@ public class Dijkstra
                                 {5, 3, 2, INF}};     // 4
 
         Dijkstra dj = new Dijkstra();
-        dj.DijkstraAlgorithm(graph,1);
+        dj.DijkstraAlgorithm(graph,1-1);
 
 
     }
