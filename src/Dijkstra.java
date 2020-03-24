@@ -36,12 +36,18 @@ import java.util.Hashtable;
 public class Dijkstra{
 
     private static final Integer INF = 99999;
+    private static final Integer ROOT = 0;
     private Integer[][] graph = null;
     private Integer V = null;
     private Integer[][] settledNodes = null;
     private Integer[][] unSettleNodes = null;
-    private Hashtable<String, Integer>  visited = null;
+    private Hashtable<String, Integer[]>  visited = null;
     private Hashtable<String, Integer[]> unvisited = null;
+    private Integer source;
+    private Integer dest;
+    private Integer parent;
+
+
     // Default Constructor
     public Dijkstra(){}
 
@@ -54,6 +60,7 @@ public class Dijkstra{
         this.graph = graph;
         unvisited = setUnvisitedNodes(graph);
         printHash_1D(unvisited);
+        visited = initVisitedNodes(V,2);
     }
     /**
      * Print hashtable {String, Integer[]}
@@ -114,6 +121,28 @@ public class Dijkstra{
         }
         return unVisited;
     }
+    /**
+     * Initializes the start node to 0 and all other nodes to INFINITY
+     * @param vertices
+     * @param startNode
+     * @return
+     */
+    public Hashtable<String,Integer[]> initVisitedNodes(Integer vertices, Integer startNode)
+    {
+        int V = vertices;
+        Hashtable<String,Integer[]> visited = new Hashtable<>();
+        Integer[] node = null;
+        for (int i = 0; i < V; i++)
+        {
+            node = new Integer[V];
+            for (int j = 0; j < V; j++) {
+                node[j] = (i==(startNode-1) && j==0 ? ROOT:INF);
+            }
+            visited.put(String.valueOf(i+1),node);
+        }
+        return visited;
+    }
+
     public static void main(String[] args) {
 
                             // A , B , C , D
