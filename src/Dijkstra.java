@@ -104,6 +104,7 @@
  *************************************************************************************************/
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+import java.awt.event.WindowFocusListener;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -120,6 +121,8 @@ public class Dijkstra
      * Default Constructor
      *********************************************************************************************/
     public Dijkstra(){}
+
+
     /**********************************************************************************************
      * Dijkstra Algorihm
      * @param graph
@@ -133,9 +136,10 @@ public class Dijkstra
          *  we have to initilaize several values to hold specific
          *  parameters to help us find the shortest path through the graph
          */
-        Integer V = 0, count = 0, itt = 0;
-        V = itt = graph.length;                             // The total number of nodes in our graph
-        Integer minimumValue = 99999;                       // Represents the weight/distance of the shortest edge node
+        final Integer V = graph.length;
+        Integer count = V;
+        Integer itt = V;                             // The total number of nodes in our graph
+        Integer minimumValue = INF;                       // Represents the weight/distance of the shortest edge node
         Integer nextNodeShortestPathToTraverse = 0;         // Represents the node with the next best shortest path
         Integer[][] settledNodes = new Integer[V][V];       // Settled Nodes according to the best shortest path
         Integer[][] unsettledNodes = new Integer[V][V];     // Unsettled Nodes not visible from the frontier
@@ -182,16 +186,6 @@ public class Dijkstra
             log.info("\tSettled Nodes:=> " + Arrays.deepToString(settledNodes));
             log.info("\tFrontier Nodes:=> " + Arrays.deepToString(frontier));
         }
-
-        if (count != V){ // Now we check the frontier to whats next to settle
-            for (i = S; i < V; i++) {
-                for (j = 0; j < V; j++) {
-                    if (i == nextNodeShortestPathToTraverse){
-                        settledNodes[i][j] = (graph[i][j] <= settledNodes[i][j] ? graph[i][j]: settledNodes[i][j]);
-                    }
-                }
-            }
-        }
         /*
          * In this step we will find the he next shortest path
          */
@@ -204,14 +198,39 @@ public class Dijkstra
                  * Here we capture the node with the shortest edge in the frontier
                  * of the node currently being settled
                  */
-                if (minimumValue >= frontier[i][j]) {  // Find the next shortest path/edge node
+                if(minimumValue > frontier[i][j] && frontier[i][j] != INF) {  // Find the next shortest path/edge node
                     minimumValue = frontier[i][j];
-                    nextNodeShortestPathToTraverse = N = L= j;
+                    log.info("Minimum Value: "+minimumValue);
+                    log.info("Next shortest path node: "+j);
+                    nextNodeShortestPathToTraverse = L= j;
+                    frontier[L][j] = INF;
+                    settledNodes[S][j] = (graph[S][j] <= settledNodes[S][j] ? graph[S][j]:settledNodes[S][j]);
+                    for (k = 0; k < V; k++) {
+                        frontier[L][k] = graph[L][k];
+                        unsettledNodes[L][k] = INF;
+                    }
+                    if (i == L && minimumValue >= graph[i][j]){
+                    }
                 }   // End of find our shortest edge
-                log.info("[193]"+N+"");
             }
         }
-        while (count != 2){
+        log.info("\tUnsettled Nodes:=> " + Arrays.deepToString(unsettledNodes));
+        log.info("\tSettled Nodes:=> " + Arrays.deepToString(settledNodes));
+        log.info("\tFrontier Nodes:=> " + Arrays.deepToString(frontier));
+
+
+        if (count != V){ // Now we check the frontier to whats next to settle
+            for (i = S; i < V; i++) {
+                for (j = 0; j < V; j++) {
+                    if (i == nextNodeShortestPathToTraverse){
+                       // settledNodes[i][j] = (graph[i][j] <= settledNodes[i][j] ? graph[i][j]: settledNodes[i][j]);
+                    }
+                }
+            }
+        }
+
+
+        while (count > 3){
         count--;
         DijkstraAlgorithm(unsettledNodes,nextNodeShortestPathToTraverse);
         }
@@ -343,8 +362,7 @@ public class Dijkstra
         while (ky.hasMoreElements())
         {
             key = ky.nextElement().toString();
-            System.out.print(key);
-            System.out.println(printNode(hash.get(key)));
+            System.out.println(key + "  " +printNode(hash.get(key)));
 
         }
 
@@ -490,9 +508,34 @@ public class Dijkstra
         return Integer.parseInt(number);
     }
 
+    public Hashtable<String,Integer[]> setUnsettledNodes(Integer[][] graph)
+    {
+        int V = graph.length;
+        Hashtable<String,Integer[]> unsettled = new Hashtable<>();
+        Integer[] node = null;
+        for (int i = 0; i < graph.length; i++)
+        {
+            node = new Integer[V];
+            for (int j = 0; j < graph.length; j++) {
+                node[j] = graph[i][j];
+            }
+            unsettled.put(String.valueOf(i+1),node);
+        }
 
+        return unsettled;
+    }
+
+    public Hashtable<String,Integer[]> removeSettledNodeFromUnsettledNodes(Hashtable<String,Integer[]> hash, int nodeToRemove)
+    {
+        Integer[] node = hash.get(nodeToRemove);
+        node[nodeToRemove] = INF;
+        hash.replace(String.valueOf(nodeToRemove),node);
+
+        return hash;
+    }
     public static void main(String[] args)
     {
+        Dijkstra dj = new Dijkstra();
                                 // A , B , C , D
                                 // 1 , 2 , 3 , 4
         Integer[][] graph = {   {INF, 1, 7, 5},      // 1
@@ -500,8 +543,14 @@ public class Dijkstra
                                 {7, INF, INF, 2},    // 3
                                 {5, 3, 2, INF}};     // 4
 
-        Dijkstra dj = new Dijkstra();
-        dj.DijkstraAlgorithm(graph,1-1);
+        int V = graph.length;
+        Hashtable<String,Integer[]> unsettled = dj.removeSettledNodeFromUnsettledNodes()
+        log.info(Arrays.deepToString(unsettled.get("1")));
+
+        dj.printHash_1D(unsettled);
+        //log.info(unsettled+"");
+        //Dijkstra dj = new Dijkstra();
+        //dj.DijkstraAlgorithm(graph,1-1);
 
 
     }

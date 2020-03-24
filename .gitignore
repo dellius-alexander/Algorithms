@@ -1,6 +1,8 @@
+
 # ignore all class files
-**/*.class
-**/*.iml
-**/*out/
-**/*.vscode
-**/*.eclipse
+*.class
+*.iml
+out/
+*.vscode
+*.eclipse
+*.log
