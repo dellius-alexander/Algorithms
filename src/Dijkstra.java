@@ -5,10 +5,12 @@ import java.util.Hashtable;
  * Let the node at which we are starting be called the initial node. Let the distance of node Y be the
  * distance from the initial node to Y. Dijkstra's algorithm will assign some initial distance values
  * and will try to improve them step by step.
- *      1. Mark all nodes unvisited = . Create a set of all the unvisited nodes called the unvisited set.
+ *      1. [ INITIALIZE UNVISITED/UNSETTLED NODES CONTAINER MAPPING ]: Mark all nodes unvisited = . Create a set
+ *          of all the unvisited nodes called the unvisited set.
  *
- *      2. Assign to every node a tentative distance value: set it to zero for our initial node and to
- *          infinity for all other nodes. Set the initial node as current.[14]
+ *      2. [ INITIALIZE VISITED/SETTLED NODES CONTAINER MAPPING ]: Assign to every node a tentative distance value:
+ *          set the initial it to zero for our initial node and to INFINITY (∞) for all other nodes.
+ *          Set the initial node as current.
  *
  *      3. For the current node, consider all of its unvisited neighbours and calculate their tentative
  *          distances through the current node. Compare the newly calculated tentative distance to the current
@@ -16,6 +18,7 @@ import java.util.Hashtable;
  *          distance of 6, and the edge connecting it with a neighbour B has length 2, then the distance to B
  *          through A will be 6 + 2 = 8. If B was previously marked with a distance greater than 8 then change
  *          it to 8. Otherwise, the current value will be kept.
+ *          [ MINIMUM_VALUE(S + D, D) ]
  *
  *      4. When we are done considering all of the unvisited neighbours of the current node, mark the
  *          current node as visited and remove it from the unvisited set. A visited node will never be
@@ -59,8 +62,13 @@ public class Dijkstra{
         V = graph.length;
         this.graph = graph;
         unvisited = setUnvisitedNodes(graph);
+        System.out.println("\n");
+        System.out.println("Unvisited Nodes: \n");
         printHash_1D(unvisited);
         visited = initVisitedNodes(V,2);
+        System.out.println("Visited Nodes: \n");
+        printHash_1D(visited);
+
     }
     /**
      * Print hashtable {String, Integer[]}
@@ -85,7 +93,6 @@ public class Dijkstra{
         int j = 0;
         String edges = "";
         edges += String.format("\n");
-
         for (int i = 0; i < V; i++) {
             edges += String.format("____%1d___", i+1);
         }
@@ -130,18 +137,21 @@ public class Dijkstra{
     public Hashtable<String,Integer[]> initVisitedNodes(Integer vertices, Integer startNode)
     {
         int V = vertices;
+        int S = startNode -1;
         Hashtable<String,Integer[]> visited = new Hashtable<>();
         Integer[] node = null;
         for (int i = 0; i < V; i++)
         {
             node = new Integer[V];
             for (int j = 0; j < V; j++) {
-                node[j] = (i==(startNode-1) && j==0 ? ROOT:INF);
+                node[j] = (i==S && j==S ? ROOT:INF);
             }
             visited.put(String.valueOf(i+1),node);
         }
         return visited;
     }
+
+
 
     public static void main(String[] args) {
 
@@ -156,4 +166,4 @@ public class Dijkstra{
 
     }
 
-    }
+}
