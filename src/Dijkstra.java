@@ -49,9 +49,10 @@ public class Dijkstra{
     private Integer[][] graph = null;
     // V = number of vertices
     private Integer V = null;
+    private Integer count = null;
     //private Integer[][] settledNodes = null;
     //private Integer[][] unSettleNodes = null;
-    private Hashtable<String, Integer[]>  visited = null;
+    private Hashtable<String, Integer[]> visited = null;
     private Hashtable<String, Integer[]> unvisited = null;
     //private Integer sourceNodeValue;
     //private Integer destNodeValue;
@@ -67,6 +68,7 @@ public class Dijkstra{
      */
     public Dijkstra(Integer[][] graph, Integer startNode){
         V = graph.length;
+        count = V;
         this.graph = graph;
         unvisited = setUnvisitedNodes(graph);
         System.out.println("\n");
@@ -79,26 +81,27 @@ public class Dijkstra{
         String key = String.valueOf(startNode);
         //System.out.println(key);
 
-        Dijkstra_Algorithm(key,startNode,visited,unvisited);
+        Dijkstra_Algorithm(key, startNode, visited, unvisited);
 
         //visited.replace("2", evaluateCurrentNodes(visited.get("2"),unvisited.get("2"),visited.get("2")[0]));
         //System.out.println(printNode(evaluateCurrentNodes(visited.get("2"),unvisited.get("2"),visited.get("2")[0])));
         //printNode(evaluateCurrentNodes(visited.get("1"),unvisited.get("0"),unvisited.get("0")[1]));
 
-        
-    }
-    public void Dijkstra_Algorithm(String key,Integer startNode, Hashtable<String, Integer[]> visited, Hashtable<String, Integer[]> unvisited)
-    {
-        Integer count = V;
 
-        if (count > V-1) {
+    }
+
+    public void Dijkstra_Algorithm(String key, Integer startNode, Hashtable<String, Integer[]> visited, Hashtable<String, Integer[]> unvisited) {
+
+        System.out.println(count);
+        if (count > V - 2) {
             visited.replace(key, addUnvisitedNodeToVisitedNode(visited.get(key), unvisited.get(key), visited.get(key)[startNode - 1]));
             Integer nextKey = findNextShortestPath(visited);
             String nextKeyStr = String.valueOf(nextKey);
+            count--;
             Dijkstra_Algorithm(nextKeyStr, nextKey, visited, unvisited);
 
         }
-        count--;
+
         printHash_1D(visited);
 
     }
