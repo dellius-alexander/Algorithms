@@ -1,5 +1,7 @@
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.logging.Logger;
 
 /*****************************************************************************************************************
  * Let the node at which we are starting be called the initial node. Let the distance of node Y be the
@@ -38,17 +40,22 @@ import java.util.Hashtable;
  ****************************************************************************************************************/
 public class Dijkstra{
 
+    private static Logger log = Logger.getLogger("Dijkstra");
+    // Infinity
     private static final Integer INF = 99999;
+    // Root node initial value
     private static final Integer ROOT = 0;
+    // The graph
     private Integer[][] graph = null;
+    // V = number of vertices
     private Integer V = null;
-    private Integer[][] settledNodes = null;
-    private Integer[][] unSettleNodes = null;
+    //private Integer[][] settledNodes = null;
+    //private Integer[][] unSettleNodes = null;
     private Hashtable<String, Integer[]>  visited = null;
     private Hashtable<String, Integer[]> unvisited = null;
-    private Integer source;
-    private Integer dest;
-    private Integer parent;
+    //private Integer sourceNodeValue;
+    //private Integer destNodeValue;
+    //private Integer parentNode;
 
 
     // Default Constructor
@@ -58,29 +65,79 @@ public class Dijkstra{
      * Initializes our class attributes
      * @param graph
      */
-    public Dijkstra(Integer[][] graph){
+    public Dijkstra(Integer[][] graph, Integer startNode){
         V = graph.length;
         this.graph = graph;
         unvisited = setUnvisitedNodes(graph);
         System.out.println("\n");
         System.out.println("Unvisited Nodes: \n");
         printHash_1D(unvisited);
-        visited = initVisitedNodes(V,2);
+        visited = initVisitedNodes(V,startNode);
         System.out.println("Visited Nodes: \n");
         printHash_1D(visited);
 
+        String key = String.valueOf(startNode);
+        //System.out.println(key);
+
+        Dijkstra_Algorithm(key,startNode,visited,unvisited);
+
+        //visited.replace("2", evaluateCurrentNodes(visited.get("2"),unvisited.get("2"),visited.get("2")[0]));
+        //System.out.println(printNode(evaluateCurrentNodes(visited.get("2"),unvisited.get("2"),visited.get("2")[0])));
+        //printNode(evaluateCurrentNodes(visited.get("1"),unvisited.get("0"),unvisited.get("0")[1]));
+
+        
+    }
+    public void Dijkstra_Algorithm(String key,Integer startNode, Hashtable<String, Integer[]> visited, Hashtable<String, Integer[]> unvisited)
+    {
+        Integer count = V;
+
+        if (count > V-1) {
+            visited.replace(key, addUnvisitedNodeToVisitedNode(visited.get(key), unvisited.get(key), visited.get(key)[startNode - 1]));
+            Integer nextKey = findNextShortestPath(visited);
+            String nextKeyStr = String.valueOf(nextKey);
+            Dijkstra_Algorithm(nextKeyStr, nextKey, visited, unvisited);
+
+        }
+        count--;
+        printHash_1D(visited);
+
+    }
+
+    /**
+     * Find the shortest path and the next node to traverse
+     * @param visited
+     * @return
+     */
+    public Integer findNextShortestPath(Hashtable<String, Integer[]> visited)
+    {
+        Integer shortestPathNode = INF;
+        Integer[] node = new Integer[V];
+
+        for (int i = 0; i < V; i++) {
+            String key = String.valueOf(i+1);
+            node = visited.get(key);
+            //log.info(key);
+            for (int j = 0; j < V; j++) {
+                if (shortestPathNode > node[j])
+                {
+                    shortestPathNode = i;
+                }
+                //log.info(node[j]+"");
+            }
+        }
+        return  shortestPathNode;
     }
     /**
      * Print hashtable {String, Integer[]}
-     * @param hash  Param must be of Hashtable<String, Integer[]>
+     * @param nodes  Param must be of Hashtable<String, Integer[]>
      */
-    public void printHash_1D(Hashtable<String, Integer[]> hash){
+    public void printHash_1D(Hashtable<String, Integer[]> nodes){
         String key = null;
-        Enumeration ky = hash.keys();
+        Enumeration ky = nodes.keys();
         while (ky.hasMoreElements())
         {
             key = ky.nextElement().toString();
-            System.out.println(key + "  " +printNode(hash.get(key)));
+            System.out.println(key + "  " +printNode(nodes.get(key)));
         }
     }
     /**
@@ -151,7 +208,64 @@ public class Dijkstra{
         return visited;
     }
 
+    /**
+     *
+     * @param sourceNode
+     * @param sourceElement
+     * @param nodes
+     * @return
+     */
+    public Integer getSourceNodeElementValue(String sourceNode, Integer sourceElement, Hashtable<String,Integer[]> nodes)
+    {
+        return nodes.get(sourceNode)[sourceElement];
+    }
+    /**
+     *
+     * @param visited
+     * @param unvisited
+     * @param sourceNode
+     * @return
+     */
+    public Integer[] addUnsettleNode(Hashtable<String, Integer[]> visited, Hashtable<String, Integer[]> unvisited, String sourceNode)
+    {
+        // V = vertices
+        Integer[] node = new Integer[V];
+        for (int i = 0; i < V; i++) {
 
+
+            node[i] = (unvisited.get(sourceNode)[i] + getSourceNodeElementValue(sourceNode,i,visited) <
+            visited.get(sourceNode)[i] ? unvisited.get(sourceNode)[i] +
+            getSourceNodeElementValue(sourceNode,i,visited): getSourceNodeElementValue(sourceNode,i,visited));
+        }
+        return node;
+    }
+    public Integer[] addUnvisitedNodeToVisitedNode(Integer[] settled, Integer[] unsettled, Integer sourceNodeValue){
+
+        Integer[] node = new Integer[V];
+        for (int i = 0; i < V; i++) {
+            node[i] = (unsettled[i] < settled[i] ? unsettled[i]:settled[i]);
+        }
+        return node;
+    }
+    /**
+     * Evaluates the elements of two nodes; it adds the distance/weight of the source node/element to the
+     * distance/weight to the unvisited node/element and assigns the minimum value to the visited node/element
+     * to find the shortest path of that node/element between parent and edge node
+     * @param visited
+     * @param unvisited
+     * @param sourceNodeValue
+     * @return
+     */
+    public Integer[] evaluateCurrentNodes(Integer[] visited, Integer[] unvisited, Integer sourceNodeValue)
+    {
+        int V = visited.length;
+        //int S = startNode -1;
+        Integer[] node = new Integer[V];
+        for (int i = 0; i < V; i++) {
+            node[i] = (unvisited[i]+sourceNodeValue < visited[i] ? unvisited[i]+sourceNodeValue : visited[i]);
+        }
+        return node;
+    }
 
     public static void main(String[] args) {
 
@@ -162,7 +276,7 @@ public class Dijkstra{
                             {7, INF, INF, 2},    // 3
                             {5, 3, 2, INF}};     // 4
 
-        Dijkstra dj = new Dijkstra(graph);
+        Dijkstra dj = new Dijkstra(graph,2);
 
     }
 
