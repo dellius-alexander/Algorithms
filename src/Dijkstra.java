@@ -93,13 +93,18 @@ public class Dijkstra{
     public void Dijkstra_Algorithm(String key, Integer startNode, Hashtable<String, Integer[]> visited, Hashtable<String, Integer[]> unvisited) {
 
         System.out.println(count);
-        if (count > V - 2) {
-            visited.replace(key, addUnvisitedNodeToVisitedNode(visited.get(key), unvisited.get(key), visited.get(key)[startNode - 1]));
+        Enumeration ky = unvisited.keys();
+        while (ky.hasMoreElements()) {
+            if (count == 2)
+                break;
+            visited.replace(key, addUnvisitedNodeToVisitedNode(visited.get(key), unvisited.get(key), visited.get(key)[startNode]));
+            unvisited.remove(key);
             Integer nextKey = findNextShortestPath(visited);
             String nextKeyStr = String.valueOf(nextKey);
-            count--;
             Dijkstra_Algorithm(nextKeyStr, nextKey, visited, unvisited);
-
+            printHash_1D(visited);
+            printHash_1D(unvisited);
+            count--;
         }
 
         printHash_1D(visited);
