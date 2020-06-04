@@ -91,44 +91,94 @@ public class FloydWarshall
         return true;
     }
     /***********************************************************************************************************************
+ * Floyd Warshall Algorithm on Weighted Edges
+ * @param graph The graph to be evaluated
+ * @return
+ ***********************************************************************************************************************/
+public boolean floyd_Warshall_Algorithm_Weighted(Integer[][] graph)
+{
+    // initialize each array
+    this.distance = graph;
+    this.origin_graph = graph;
+    // Vertices quantity
+    V  = this.distance.length;
+    this.resultsSet = new Integer[V+1][V][V];
+
+    // VERIFY that our array is not null before we continue
+    if (this.distance == null)
+    {
+        System.out.println("Please initialize your graph!!!\n\nThe graph is currently null!!!\n\n");
+        System.exit(0);
+    }
+
+    // N represents the current node; N - 1 = represents the previous node or previous unlocked node
+    int N = 0;
+    // source node
+    int i = 0;
+    // destination node
+    int j = 0;
+    // Assign the root N = node 0 to the root of our results set
+    for (i = 0; i < V; i++)
+    {
+        for (j = 0; j < V; j++)
+        {
+            resultsSet[N][i][j] = distance[i][j];
+        }
+    }
+    // Unlocking starting at N = node 1
+    for ( N = 1; N <= V; N++)
+    {
+        for ( i = 0; i < V; i++)
+        {
+            for ( j = 0; j < V; j++) {
+                // capture our results set of each unlocking
+                resultsSet[N][i][j] = (distance[i][N - 1] + distance[N - 1][j] < distance[i][j] ? (distance[i][N - 1] + distance[N - 1][j]) : distance[i][j]);
+                // unlock current itteraton/node recurrsively
+                distance[i][j] = (distance[i][N - 1] + distance[N - 1][j] < distance[i][j] ? (distance[i][N - 1] + distance[N - 1][j]) : distance[i][j]);
+            }
+        }
+    }
+    return true;
+    }
+    /***********************************************************************************************************************
      * Floyd Warshall Algorithm on Weighted Edges
      * @param graph The graph to be evaluated
      * @return
      ***********************************************************************************************************************/
-    public boolean floyd_Warshall_Algorithm_Weighted(Integer[][] graph)
-    {        
+    public boolean floyd_Warshall_Algorithm_Non_Weighted(Integer[][] graph)
+    {
         // initialize each array
         this.distance = graph;
         this.origin_graph = graph;
         // Vertices quantity
-        V  = this.distance.length;  
+        V  = this.distance.length;
         this.resultsSet = new Integer[V+1][V][V];
 
         // VERIFY that our array is not null before we continue
-        if (this.distance == null) 
+        if (this.distance == null)
         {
             System.out.println("Please initialize your graph!!!\n\nThe graph is currently null!!!\n\n");
             System.exit(0);
-        }          
-     
+        }
+
         // N represents the current node; N - 1 = represents the previous node or previous unlocked node
-        int N = 0; 
+        int N = 0;
         // source node
-        int i = 0; 
+        int i = 0;
         // destination node
-        int j = 0;        
+        int j = 0;
         // Assign the root N = node 0 to the root of our results set
-        for (i = 0; i < V; i++) 
+        for (i = 0; i < V; i++)
         {
-            for (j = 0; j < V; j++) 
+            for (j = 0; j < V; j++)
             {
                 resultsSet[N][i][j] = distance[i][j];
             }
         }
         // Unlocking starting at N = node 1
-        for ( N = 1; N <= V; N++) 
+        for ( N = 1; N <= V; N++)
         {
-            for ( i = 0; i < V; i++) 
+            for ( i = 0; i < V; i++)
             {
                 for ( j = 0; j < V; j++) {
                     // capture our results set of each unlocking
@@ -140,26 +190,6 @@ public class FloydWarshall
         }
         return true;
     }
-
-    /***********************************************************************************************************************
-     * Main Method
-     * @param args
-     **********************************************************************************************************************/
-    public static void main(String[] args) {
-
-        Integer[][] root_graph = {{0, 3, INF, 5, INF, 2},
-                {3, 0, 7, INF, INF, INF},
-                {INF, 7, 0, 4, 13, 12},
-                {5, INF, 4, 0, 15, INF},
-                {INF, INF, 13, 15, 0, 19},
-                {2, INF, 12, INF, 19, 0}};
-        FloydWarshall fw = new FloydWarshall(root_graph);
-        fw.floyd_Warshall_Algorithm_Weighted();
-        fw.printResults();
-        //fw.floyd_Warshall_Algorithm_Weighted(root_graph);
-        //fw.printResults(fw.resultsSet);
-    }
-
     /***********************************************************************************************************************
      * Print results set
      **********************************************************************************************************************/
@@ -183,7 +213,6 @@ public class FloydWarshall
             System.out.println("\n\n");
         }
     }
-
     /***********************************************************************************************************************
      * Print results set
      * @param resultsSet    The results set
@@ -210,5 +239,22 @@ public class FloydWarshall
             System.out.println("\n\n");
         }
     }
+    /***********************************************************************************************************************
+     * Main Method
+     * @param args
+     **********************************************************************************************************************/
+    public static void main(String[] args) {
+
+        Integer[][] root_graph = {{0, 3, INF, 5},
+                                {3, 0, 7, INF},
+                                {INF, 7, 0, 4},
+                                {2, INF, 12, INF}};
+        FloydWarshall fw = new FloydWarshall(root_graph);
+        fw.floyd_Warshall_Algorithm_Weighted();
+        fw.printResults();
+        //fw.floyd_Warshall_Algorithm_Weighted(root_graph);
+        //fw.printResults(fw.resultsSet);
+    }
+
 }
         
