@@ -1,0 +1,59 @@
+plugins {
+    id 'java-library'
+}
+
+description = '''Dijkstra algorithm used to find shortest path in a connected graph'''
+
+group = 'org.example'
+version = '1.0'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+
+}
+
+compileJava {
+    options.compilerArgs.addAll(['-Xlint:unchecked'])
+    options.deprecation = true
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation group: 'org.json', name: 'json', version: '20220320'
+
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12
+    testImplementation group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.36', ext: 'pom'
+
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
+
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
+
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2
+    implementation group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.9.0'
+
+    // https://mvnrepository.com/artifact/org.apache.cassandra/cassandra-all
+    implementation group: 'org.apache.cassandra', name: 'cassandra-all', version: '4.0.5'
+
+    testImplementation group: 'org.testng', name: 'testng', version: '7.6.0'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+}
+
+test {
+    useTestNG()
+}
+
+
+
