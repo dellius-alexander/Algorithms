@@ -1,6 +1,0 @@
-[submodule "Dijkstra"]
-	path = Dijkstra
-	url = ./Dijkstra
-[submodule "BreadthFirstSearch"]
-	path = BreadthFirstSearch
-	url = ./BreadthFirstSearch
