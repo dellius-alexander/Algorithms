@@ -1,0 +1,18 @@
+
+plugins {
+    id 'java'
+}
+
+description 'Algorithms'
+
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompileOnly group: 'org.testng', name: 'testng', version: '7.6.0'
+}
+
+

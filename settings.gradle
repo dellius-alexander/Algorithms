@@ -1,0 +1,8 @@
+rootProject.name = 'Algorithms'
+
+include ':Dijkstra'
+include ':BreadthFirstSearch'
+
+project(':Dijkstra').setProjectDir(new File("./Dijkstra/build.gradle"))
+project(':BreadthFirstSearch').setProjectDir(new File("./BreadthFirstSearch/build.gradle"))
+
