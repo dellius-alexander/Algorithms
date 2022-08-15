@@ -1,11 +1,21 @@
 
 plugins {
-    id 'java'
+    id 'java-library'
 }
 
-description 'Algorithms'
+description = '''
+An algorithm is a procedure to accomplish a specific task.
+An algorithm must solve a general, well-specified problem. 
+An algorithmic problem is specified by describing the complete 
+set of instances it must work on and of its output after 
+running on one of these instances. This distinction, between 
+a problem and an instance of a problem, is fundamental. 
+An algorithm is a procedure that takes any of the possible 
+input instances and transforms it to the desired output.
+'''
 
-version '1.0'
+group = 'org.example'
+version = '1.0'
 
 repositories {
     mavenCentral()
@@ -14,5 +24,3 @@ repositories {
 dependencies {
     testCompileOnly group: 'org.testng', name: 'testng', version: '7.6.0'
 }
-
-

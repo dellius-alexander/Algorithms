@@ -1,3 +1,23 @@
-# Algorithms
+<h1>Algorithms</h1>
+<hr/>
 
-## 1. [Dijkstra Algorithm](https://github.com/dellius-alexander/Dijkstra/blob/40d317dcb28a0a4100d28b445266904a30552c84/README.md)
+An algorithm is a procedure to accomplish a specific task.
+An algorithm must solve a general, well-specified problem. 
+An algorithmic problem is specified by describing the complete 
+set of instances it must work on and of its output after 
+running on one of these instances. This distinction, between 
+a problem and an instance of a problem, is fundamental. 
+An algorithm is a procedure that takes any of the possible 
+input instances and transforms it to the desired output.
+
+<hr/>
+
+
+<ol id="algorithm-list">
+    <li>
+        <a href="./Dijkstra/README.md" id="dijkstra">Dijkstra Algorithm</a>
+    </li>
+    <li>
+        <a href="./BreadthFirstSearch/README.md" id="breadthFirstSearch">BreadthFirstSearch Algorithm</a>
+    </li>
+</ol>
