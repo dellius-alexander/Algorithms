@@ -26,13 +26,14 @@ on the vertices of the graph. This algorithm has a modification
 terminating at your target or destination node.
 <hr/>
 <h3>
-<strong>BFS( G, d, a, z ):= [a...z]</strong> {shortest path from a to z}
+<strong>BFS( G, d, s, z ):= [s...z]</strong> {shortest path from a to z}
 </h3>
+
 BFS(
     G := digraph,
     d := distance/weight/cost of edges,
-    a := start node,
-    z := target/destination node ):= path from a to z
+    s := start node,
+    z := target/destination node ):= path from s to z
 
 for each vertex u∈V(G)−{s} do
     state(u) = “undiscovered”
@@ -55,5 +56,5 @@ while Q ̸= 0 do
     if state(z) = "destination/goal" then
     break;
 
-return state({a..z}) {list of nodes from start to destination}
+return state(z) {list of nodes from start to destination}
 </pre>
