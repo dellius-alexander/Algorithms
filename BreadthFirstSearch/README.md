@@ -40,7 +40,7 @@ for each vertex u∈V[G]−{s} do
 state[s] = “discovered”
 p[s] = nil
 Q = {s}
-while Q ̸= ∅ do
+while Q ̸= 0 do
     u = dequeue[Q]
     process vertex u as desired
     for each v ∈ Adj[u] do
@@ -54,5 +54,6 @@ while Q ̸= ∅ do
     state[u] = “processed”
     if state[d] = "destination/goal" then
     break;
+
 return state[a..z] {list of nodes from start to destination}
 </pre>
