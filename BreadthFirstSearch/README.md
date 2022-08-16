@@ -12,7 +12,7 @@ the evaluation function is the depth of the node—that is, the number
 of actions it takes to reach the node.
 
 <hr/>
-<html lang="en">
+
 <pre>
 <h2>Procedure BreadthFirstSearch’s Algorithm</h2>
 <hr/>
@@ -39,10 +39,12 @@ BFS(
 for each vertex u ∈ V(G)−{s} do
     state(u) = “undiscovered”
     p(u) = nil, i.e. no parent is in the BFS tree
+
 state(s) = “discovered”
 p(s) = nil
 Q = {s}
-while Q ̸= 0 do
+
+while Q > 0 do
     u = dequeue(Q)
     process vertex u as desired
     for each v ∈ Adj(u) do
@@ -59,4 +61,4 @@ while Q ̸= 0 do
 
 return state(z) {list of nodes from start to destination}
 </pre>
-</html>
+
