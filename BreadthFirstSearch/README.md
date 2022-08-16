@@ -14,7 +14,7 @@ of actions it takes to reach the node.
 <hr/>
 <pre>
 <h2>Procedure BreadthFirstSearch’s Algorithm</h2>
-<p>
+<hr/>
 A breadth-first search algorithm we start at some node and traverse 
 a directed graph ending at some destination node. At some point during 
 the course of a traversal, every node in the graph changes state from 
@@ -22,26 +22,37 @@ undiscovered to discovered. In a breadth-first search of an undirected
 graph, we assign a direction to each edge, from the discoverer u to 
 the discovered v. We thus denote u to be the parent of v. Since each 
 node has exactly one parent, except for the root, this defines a tree 
-on the vertices of the graph.
-</p>
+on the vertices of the graph. This algorithm has a modification 
+terminating at your target or destination node.
 <hr/>
+<h3>
+<strong>BFS( G, d, a, z ):= [a...z]</strong> {shortest path from a to z}
+</h3>
+BFS(
+    G := digraph,
+    d := distance/weight/cost of edges,
+    a := start node,
+    z := target/destination node ):= path from a to z
 
-BFS(G, s)
-    for each vertex u∈V[G]−{s} do
-        state[u] = “undiscovered”
-        p[u] = nil, i.e. no parent is in the BFS tree
-    state[s] = “discovered”
-    p[s] = nil
-    Q = {s}
-    while Q ̸= ∅ do
-        u = dequeue[Q]
-        process vertex u as desired
-        for each v ∈ Adj[u] do
-            process edge (u,v) as desired
-            if state[v] = “undiscovered” then
-                state[v] = “discovered”
-                p[v] = u    {parent node = child node}
-                enqueue[Q, v]
-        state[u] = “processed”
-       
+for each vertex u∈V[G]−{s} do
+    state[u] = “undiscovered”
+    p[u] = nil, i.e. no parent is in the BFS tree
+state[s] = “discovered”
+p[s] = nil
+Q = {s}
+while Q ̸= ∅ do
+    u = dequeue[Q]
+    process vertex u as desired
+    for each v ∈ Adj[u] do
+        process edge (u,v) as desired
+        if state[v] = “undiscovered” then
+            state[v] = “discovered”
+            p[v] = u    {parent node = child node}
+            enqueue[Q, v]
+        if state[d] = "destination/goal" then
+            break;
+    state[u] = “processed”
+    if state[d] = "destination/goal" then
+    break;
+   
 </pre>

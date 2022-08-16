@@ -15,9 +15,6 @@ call to BEST-FIRST- SEARCH with PATH-COST as the evaluation function.
 <pre>
 <h2>Procedure Dijkstra’s Algorithm</h2>
 <hr/>
-
-Recursive implementation of Dijkstra Algorithm:
-
 Dijkstra’s algorithm is the method of choice for finding shortest 
 paths in an edge- and/or vertex-weighted graph. Given a particular 
 start vertex s, it finds the shortest path from s to every other 

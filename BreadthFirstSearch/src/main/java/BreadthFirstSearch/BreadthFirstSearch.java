@@ -65,9 +65,7 @@ public class BreadthFirstSearch {
         {
             // Initialization of all nodes with distance "infinite";
             graph.getNodes().forEach(
-                    node -> {
-                        node.setDistance(new Distance<>( Integer.MAX_VALUE));
-                    }
+                    node -> node.setDistance(new Distance<>( Integer.MAX_VALUE))
             );
             // initialization of the starting node with 0
             startNode.setDistance(distance);
@@ -106,10 +104,11 @@ public class BreadthFirstSearch {
                 }
 
             }
+
+            enQueue.add(parentNode);
             if (enQueue.contains(destinationNode)){
                 break;
             }
-            enQueue.add(parentNode);
         }
 
         log.info("\nPath Returned: {}", enQueue);
