@@ -3,19 +3,18 @@ import Dijkstra.Coordinate;
 import Dijkstra.Distance;
 import Dijkstra.Graph;
 import Dijkstra.Node;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.Queue;
-import java.util.stream.Collectors;
 
-@Test
+@Slf4j
 public class BreadthFirstSearchTest {
-    private final static Logger log = LoggerFactory.getLogger(BreadthFirstSearchTest.class);
     @Test
-    public void breadthFirstSearchTest(){
+    public void breadthFirstSearchTest()
+    {
 
         try {
             Long startTime = System.currentTimeMillis();
@@ -91,7 +90,7 @@ public class BreadthFirstSearchTest {
                             nodeA,
                             nodeL);
 
-            nodeA.setShortestPath( results0.stream().collect(Collectors.toList()) );
+            nodeA.setShortestPath(new ArrayList<>(results0));
             Long results0EndTime = System.currentTimeMillis() - startTime;
             log.info("\nRecursive Shortest Path 0:{} \nRuntime: {}\n", results0, results0EndTime);
             // we should have a list of 10 nodes returned from BFS
