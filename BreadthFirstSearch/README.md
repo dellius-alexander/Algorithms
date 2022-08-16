@@ -34,26 +34,26 @@ BFS(
     a := start node,
     z := target/destination node ):= path from a to z
 
-for each vertex u∈V[G]−{s} do
-    state[u] = “undiscovered”
-    p[u] = nil, i.e. no parent is in the BFS tree
-state[s] = “discovered”
-p[s] = nil
+for each vertex u∈V(G)−{s} do
+    state(u) = “undiscovered”
+    p(u) = nil, i.e. no parent is in the BFS tree
+state(s) = “discovered”
+p(s) = nil
 Q = {s}
 while Q ̸= 0 do
-    u = dequeue[Q]
+    u = dequeue(Q)
     process vertex u as desired
-    for each v ∈ Adj[u] do
+    for each v ∈ Adj(u) do
         process edge (u,v) as desired
-        if state[v] = “undiscovered” then
-            state[v] = “discovered”
-            p[v] = u    {parent node = child node}
-            enqueue[Q, v]
-        if state[z] = contains "destination/goal" then
+        if state(v) = “undiscovered” then
+            state(v) = “discovered”
+            p(v) = u    {parent node = child node}
+            enqueue(Q, v)
+        if state(z) = contains "destination/goal" then
             break;
-    state[u] = “processed”
-    if state[d] = "destination/goal" then
+    state(u) = “processed”
+    if state(z) = "destination/goal" then
     break;
 
-return state[a..z] {list of nodes from start to destination}
+return state({a..z}) {list of nodes from start to destination}
 </pre>
