@@ -35,7 +35,7 @@ BFS(
     s := start node,
     z := target/destination node ):= path from s to z
 
-for each vertex u∈V(G)−{s} do
+for each vertex u ∈ V(G)−{s} do
     state(u) = “undiscovered”
     p(u) = nil, i.e. no parent is in the BFS tree
 state(s) = “discovered”
@@ -51,10 +51,10 @@ while Q ̸= 0 do
             p(v) = u    {parent node = child node}
             enqueue(Q, v)
         if state(z) = contains "destination/goal" then
-            break;
+            break
     state(u) = “processed”
     if state(z) = "destination/goal" then
-    break;
+        break
 
 return state(z) {list of nodes from start to destination}
 </pre>
