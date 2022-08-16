@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class BreadthFirstSearch {
     private final static Logger log = LoggerFactory.getLogger(BreadthFirstSearch.class);
@@ -38,11 +39,12 @@ public class BreadthFirstSearch {
      *          state[u] = “processed”
      * </pre>
      *
-     * @param graph
-     * @param distance
-     * @param startNode
-     * @param destinationNode
-     * @return
+     * @param graph the graph or digraph
+     * @param distance the distance of the node from origin/start node
+     * @param startNode the start node
+     * @param destinationNode the destination node
+     * @return a list of nodes from start to destination node and all
+     * nodes in path.
      */
     public Queue<Node<String,String,Integer>> breadthFirstSearch(
             Graph<Node<String,String,Integer>> graph,
@@ -63,15 +65,13 @@ public class BreadthFirstSearch {
         {
             // Initialization of all nodes with distance "infinite";
             graph.getNodes().forEach(
-                    gNode -> {
-                        gNode.setDistance(new Distance<>( Integer.MAX_VALUE));
+                    node -> {
+                        node.setDistance(new Distance<>( Integer.MAX_VALUE));
                     }
             );
-
             // initialization of the starting node with 0
             startNode.setDistance(distance);
         }
-        enQueue.add(startNode);
 
         // add the start node to unsettled node list aka deQueue
         deQueue.add(
@@ -86,7 +86,8 @@ public class BreadthFirstSearch {
             // get the node on with the smallest/minimum distance
             Edge<Distance<Integer>, Node<String,String,Integer>> parentNodeEdge = deQueue.poll();
             Distance<Integer> parentNodeWeight = parentNodeEdge.getDistance();
-            Queue<Node<String,String,Integer>> tempQueue = new ArrayDeque<>();
+            Integer previousPathWeight = Integer.MAX_VALUE;
+            Node<String,String,Integer> parentNode = parentNodeEdge.getNode();
             // for each neighbor adjacent node of the minimum distance node, where n has not yet been
             // removed from unsettled nodes do;
             for (Edge<Distance<Integer>, Node<String,String,Integer>> childNodeEdge : parentNodeEdge.getNode().getEdges())
@@ -95,22 +96,22 @@ public class BreadthFirstSearch {
                 Node<String,String,Integer> childNode = childNodeEdge.getNode();
                 Distance<Integer> childNodeWeight = childNodeEdge.getDistance();
                 Integer pathWeight = parentNodeWeight.getValue() + childNodeWeight.getValue();
+
                 log.info("\nParent Edge: {}\nChild Edge: {}\n",parentNodeEdge,childNodeEdge);
                 if (childNode.getDistance().getValue() == Integer.MAX_VALUE)
                 {
                     childNode.setDistance(new Distance<>(pathWeight));
-                    tempQueue.add(childNode);
                     parentNodeEdge = childNodeEdge;
                     deQueue.add(parentNodeEdge);
                 }
-                if (enQueue.contains(destinationNode)){
-                    break;
-                }
+
             }
-
-            enQueue.addAll(tempQueue);
-
+            if (enQueue.contains(destinationNode)){
+                break;
+            }
+            enQueue.add(parentNode);
         }
+
         log.info("\nPath Returned: {}", enQueue);
         return enQueue;
     }

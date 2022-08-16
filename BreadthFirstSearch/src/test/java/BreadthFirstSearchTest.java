@@ -15,8 +15,8 @@ public class BreadthFirstSearchTest {
     @Test
     public void breadthFirstSearchTest()
     {
-
         try {
+            /////////////////////////////////////////////////////////
             Long startTime = System.currentTimeMillis();
             Node<String,String,Integer> nodeA = new Node<String,String,Integer>("A", "AA");
             Node<String,String,Integer> nodeB = new Node<String,String,Integer>("B", "BB");
@@ -30,7 +30,7 @@ public class BreadthFirstSearchTest {
             Node<String,String,Integer> nodeJ = new Node<String,String,Integer>("J", "JJ");
             Node<String,String,Integer> nodeK = new Node<String,String,Integer>("K", "KK");
             Node<String,String,Integer> nodeL = new Node<String,String,Integer>("L", "LL");
-
+            /////////////////////////////////////////////////////////
             nodeA.setCoordinate(new Coordinate<>(1,1));
             nodeB.setCoordinate(new Coordinate<>(1,2));
             nodeC.setCoordinate(new Coordinate<>(1,3));
@@ -44,8 +44,7 @@ public class BreadthFirstSearchTest {
             nodeJ.setCoordinate(new Coordinate<>(3,3));
             nodeK.setCoordinate(new Coordinate<>(3,4));
             nodeL.setCoordinate(new Coordinate<>(4,1));
-
-
+            /////////////////////////////////////////////////////////
             nodeA.addAdjacentNode(nodeB, new Distance<>(1));
             nodeA.addAdjacentNode(nodeC, new Distance<>(1));
             nodeB.addAdjacentNode(nodeD, new Distance<>(1));
@@ -67,9 +66,9 @@ public class BreadthFirstSearchTest {
             nodeK.addAdjacentNode(nodeB, new Distance<>(1));
             nodeL.addAdjacentNode(nodeJ, new Distance<>(1));
             nodeL.addAdjacentNode(nodeD, new Distance<>(1));
-
+            /////////////////////////////////////////////////////////
             Graph<Node<String,String,Integer>> graph = new Graph<Node<String,String,Integer>>();
-
+            /////////////////////////////////////////////////////////
             graph.addNode(nodeA);
             graph.addNode(nodeB);
             graph.addNode(nodeC);
@@ -82,19 +81,21 @@ public class BreadthFirstSearchTest {
             graph.addNode(nodeJ);
             graph.addNode(nodeK);
             graph.addNode(nodeL);
+            /////////////////////////////////////////////////////////
             BreadthFirstSearch bfs = new BreadthFirstSearch();
+            /////////////////////////////////////////////////////////
             Queue<Node<String,String,Integer>> results0 =  bfs
                     .breadthFirstSearch(
                             graph,
                             new Distance<>(0),
                             nodeA,
-                            nodeL);
-
+                            nodeI);
+            /////////////////////////////////////////////////////////
             nodeA.setShortestPath(new ArrayList<>(results0));
             Long results0EndTime = System.currentTimeMillis() - startTime;
             log.info("\nRecursive Shortest Path 0:{} \nRuntime: {}\n", results0, results0EndTime);
             // we should have a list of 10 nodes returned from BFS
-            Assert.assertEquals(results0.size(),10);
+            Assert.assertEquals(results0.size(),8);
         } catch (Exception e){
             log.error(e.getLocalizedMessage());
             e.printStackTrace();
