@@ -11,4 +11,3 @@ rootProject.name = 'BreadthFirstSearch'
 
 includeBuild('../Dijkstra')
 
-include 'org.example:Dijkstra:1.0'
