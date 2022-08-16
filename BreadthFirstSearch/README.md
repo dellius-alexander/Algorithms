@@ -12,6 +12,7 @@ the evaluation function is the depth of the node—that is, the number
 of actions it takes to reach the node.
 
 <hr/>
+<html lang="en">
 <pre>
 <h2>Procedure BreadthFirstSearch’s Algorithm</h2>
 <hr/>
@@ -58,3 +59,4 @@ while Q ̸= 0 do
 
 return state(z) {list of nodes from start to destination}
 </pre>
+</html>
