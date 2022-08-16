@@ -68,7 +68,7 @@ while z ∉ S; {here is where we recursively traverse down the
     for all {v} vertices adjacent to u or not in S;
         if L(u) + w(u, v) &#60; L(v)
         then L(v) := L(u) + w(u, v);
-
+    
         {this adds a vertex to S with minimal label and
         updates the labels of vertices not in S}
         

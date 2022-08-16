@@ -49,10 +49,10 @@ while Q ̸= ∅ do
             state[v] = “discovered”
             p[v] = u    {parent node = child node}
             enqueue[Q, v]
-        if state[d] = "destination/goal" then
+        if state[z] = contains "destination/goal" then
             break;
     state[u] = “processed”
     if state[d] = "destination/goal" then
     break;
-   
+return state[a..z] {list of nodes from start to destination}
 </pre>
