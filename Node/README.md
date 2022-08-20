@@ -1,12 +1,12 @@
 # Node
-A `node` represents the state of an object in the search tree 
+A `node` represents the `state` of an object in the search tree 
 of a search algorithm.
 
 A search algorithm takes a search problem as input and returns 
 a solution, or an indication of failure. Algorithms superimpose 
 a search tree over the state-space graph, forming various paths 
-from the initial state, trying to find a path that reaches a goal 
-state. Each `node` in the search tree corresponds to a state in 
+from the initial state, trying to find a path that reaches a `goal 
+state`. Each `node` in the search tree corresponds to a state in 
 the state space and the edges in the search tree correspond to 
 action's. The root of the tree corresponds to the initial state 
 of the problem.
