@@ -198,7 +198,7 @@ public abstract class DijkstraInterface<Name,Data,Metric> {
     public abstract Edge<Distance<Metric>, Node<Name,Data,Metric>> getMinimumDistanceNodeEdge(List<Edge<Distance<Metric>, Node<Name,Data,Metric>>> nodes);
 
     /**
-     * You must evaluate the parent and child node and evaluate if a goal
+     * You must evaluate the parent and child node and determine if a goal
      * state has been reached and return the results of this analysis. This
      * allows for flexibility and customization based on the node contents.
      * @param parentNodeEdge parent node

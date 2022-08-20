@@ -73,7 +73,7 @@ public class  Dijkstra extends DijkstraInterface<Object,Object,Object> {
     }
 
     /**
-     * You must evaluate the parent and child node and evaluate if a goal
+     * You must evaluate the parent and child node and determine if a goal
      * state has been reached and return the results of this analysis. This
      * allows for flexibility and customization based on the node contents.
      *
