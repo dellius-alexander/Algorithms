@@ -76,6 +76,6 @@ public class Distance<Metric>
      * @return the contents of this object
      */
     public String toString() {
-        return "Distance{\n\t\"Distance\":" + this.getValue() + "\n}";
+        return "Distance{\n\t\"Distance\":" + this.getValue() + "\n\t}";
     }
 }

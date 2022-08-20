@@ -117,6 +117,6 @@ public class Coordinate<Row,Column> implements Serializable
         return "Coordinate{" +
                 "\n\t\"row\":" + this.getRow() + "," +
                 "\n\t\"column\":" + this.getColumn() +
-                "\n}";
+                "\n\t}";
     }
 }

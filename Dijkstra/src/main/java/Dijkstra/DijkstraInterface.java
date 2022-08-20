@@ -8,7 +8,16 @@ import org.slf4j.LoggerFactory;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class DijkstraInterface<Name,Data,Metric> {
+
+/**
+ * The Dijkstra Interface allows for customizable initialization and cost
+ * evaluation of node traversal across edges between nodes.
+ * @param <Id> a unique identifier or object identifier
+ * @param <Data> the object stored by each node
+ * @param <Metric> the system of measurement used to evaluate the cost|weight|distance of
+ *                node traversal across edges between nodes.
+ */
+public abstract class DijkstraInterface<Id,Data,Metric> {
 
     private static final Logger log = LoggerFactory.getLogger(DijkstraInterface.class);
 
@@ -90,19 +99,18 @@ public abstract class DijkstraInterface<Name,Data,Metric> {
      * shortest path from start node to destination node z.
      * @see Node
      */
-    public List<Node<Name,Data,Metric>> calculateShortestPath(
-            Graph<Node<Name,Data,Metric>> graph,
+    public List<Node<Id,Data,Metric>> calculateShortestPath(
+            Graph<Node<Id,Data,Metric>> graph,
             Distance<Metric> distance,
-            Node<Name,Data,Metric> startNode,
-            Node<Name,Data,Metric> destinationNode)
-    {
+            Node<Id,Data,Metric> startNode,
+            Node<Id,Data,Metric> destinationNode) {
         log.info("\nInitialization......\nStart Node: {}\n",startNode);
 
         // create two lists, undiscovered/unsettled nodes and discovered/settled nodes;
         // contains all unexplored nodes
-        List<Edge<Distance<Metric>, Node<Name,Data,Metric>>> frontier = new LinkedList<>();
+        List<Edge<Distance<Metric>, Node<Id,Data,Metric>>> frontier = new LinkedList<>();
         // contains the path explored to the destination node
-        List<Node<Name,Data,Metric>> shortestPath = new LinkedList<>();
+        List<Node<Id,Data,Metric>> shortestPath = new LinkedList<>();
 
         // initialize all nodes distance to +Infinity;
         // and start node distance to 0 or some method
@@ -116,24 +124,27 @@ public abstract class DijkstraInterface<Name,Data,Metric> {
         );
 
         // get the node on with the smallest/minimum distance
-        Edge<Distance<Metric>,Node<Name,Data,Metric>> parentNodeEdge = getMinimumDistanceNodeEdge(frontier);
+        Edge<Distance<Metric>,Node<Id,Data,Metric>> parentNodeEdge = getMinimumCostNodeEdge(frontier);
 
         // for each neighbor adjacent node of the minimum distance node, where n has not yet been
         // removed from unsettled nodes do;
-        for (Edge<Distance<Metric>, Node<Name,Data,Metric>> childNodeEdge : parentNodeEdge.getNode().getEdges())
+        for (Edge<Distance<Metric>, Node<Id,Data,Metric>> childNodeEdge : parentNodeEdge.getNode().getEdges())
         {
 
             // temp container for nodes discovered on the frontier aka settled nodes
-            List<Node<Name,Data,Metric>> tempShortestPath = new LinkedList<>();
+            List<Node<Id,Data,Metric>> tempShortestPath = new LinkedList<>();
 
             // node adjacent to start node
-            Node<Name,Data,Metric> adjacentNode = childNodeEdge.getNode();
+            Node<Id,Data,Metric> adjacentNode = childNodeEdge.getNode();
 
             // remove minimal node from the undiscovered frontier/unsettled nodes list
             frontier.remove(parentNodeEdge);
 
-            // update adjacent node distance, if edgeDistance < adjacentNode distance;
-            // update adjacentNode distance = edgeDistance;
+            // evaluate parent and child node;
+            // update child node to reflect cost evaluation
+            // function; this function depends on the
+            // object domain, such as temperature, mileage, degrees,
+            // primitives, binary digit, etc.
             if (evaluateGoal(parentNodeEdge,childNodeEdge))
             {
 
@@ -171,43 +182,44 @@ public abstract class DijkstraInterface<Name,Data,Metric> {
 
         return shortestPath;
     }
-    
-    
+
     /**
-     * This function allows you to initialize your evaluation parameter to fit
-     * the problem domain. The start node on the other hand must be settled and
-     * omitted from the initialization process.
+     * Initialize each node metric parameter to fit the problem domain. The
+     * start node on the other hand must be settled and omitted from the
+     * initialization process.
      * @param graph the graph
      * @param startNode the start node
-     * @param distance any desired metric system
+     * @param distance the initial starting distance
      * @return the initialized graph
      */
-    public abstract Graph<Node<Name,Data,Metric>> initialize(
-            Graph<Node<Name,Data,Metric>> graph,
-            Node<Name,Data,Metric> startNode,
+    public abstract Graph<Node<Id,Data,Metric>> initialize(
+            Graph<Node<Id,Data,Metric>> graph,
+            Node<Id,Data,Metric> startNode,
             Distance<Metric> distance);
 
     /**
-     * This evaluation function provides a means by which to find the edge with the
-     * minimum distance node.
+     * Find the node edge with the lowest cost.
      * @param nodes the list of node.
-     * @return the node {@link Edge}<{@link Distance ,Node}>with the lowest weight/cost edge.
+     * @return the node {@link Edge}<{@link Distance ,Node}>with the lowest
+     *          weight/cost edge.
      * @see Distance
      * @see Node
      */
-    public abstract Edge<Distance<Metric>, Node<Name,Data,Metric>> getMinimumDistanceNodeEdge(List<Edge<Distance<Metric>, Node<Name,Data,Metric>>> nodes);
+    public abstract Edge<Distance<Metric>, Node<Id,Data,Metric>> getMinimumCostNodeEdge(
+            List<Edge<Distance<Metric>, Node<Id,Data,Metric>>> nodes);
 
     /**
      * You must evaluate the parent and child node and determine if a goal
-     * state has been reached and return the results of this analysis. This
-     * allows for flexibility and customization based on the node contents.
+     * state has been achieved and return the results of this analysis. This
+     * allows for flexibility and customization based on the node metrics
+     * and contents.
      * @param parentNodeEdge parent node
      * @param childNodeEdge child node
      * @return true if goal state reached, false otherwise
      */
     public abstract boolean evaluateGoal(
-            Edge<Distance<Metric>, Node<Name,Data,Metric>> parentNodeEdge,
-            Edge<Distance<Metric>, Node<Name,Data,Metric>> childNodeEdge);
+            Edge<Distance<Metric>, Node<Id,Data,Metric>> parentNodeEdge,
+            Edge<Distance<Metric>, Node<Id,Data,Metric>> childNodeEdge);
 
 
 

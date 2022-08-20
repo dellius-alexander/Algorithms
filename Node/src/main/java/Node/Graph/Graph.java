@@ -1,5 +1,5 @@
 package Node.Graph;
-
+import lombok.NonNull;
 import java.util.*;
 
 /////////////////////////////////////////////////////////////////////
@@ -14,24 +14,23 @@ import java.util.*;
  * in almost every conceivable discipline can be solved using
  * graph models.
  * </pre>
- * @param <Data> the node type parameter for this graph
+ * @param <Node> the node type parameter for this graph
  */
-public class Graph<Data> {
+public class Graph<Node> {
     /**
      * Set of nodes
      */
-    private Set<Data> nodes =  new HashSet<>();
+    private Set<Node> nodes =  new HashSet<>();
     /**
      * Map of the shortest paths
      */
-    private Map<Data, List<Data>> mapOfShortestPaths = new TreeMap<>();
-
+    private Map<Node, List<Node>> mapOfShortestPaths = new HashMap<>();
 
     /**
      * Graph of nodes
      * @param nodes set of nodes
      */
-    public Graph(Set<Data> nodes) {
+    public Graph(Set<Node> nodes) {
         this.nodes = nodes;
     }
 
@@ -39,7 +38,7 @@ public class Graph<Data> {
      * Add list of nodes to this graphs
      * @param nodes the list of nodes
      */
-    public Graph(List<Data> nodes) {
+    public Graph(List<Node> nodes) {
         this.nodes.addAll(nodes);
     }
 
@@ -47,7 +46,7 @@ public class Graph<Data> {
      * Maintain a Map of the shortest paths related to all nodes in the graph
      * @param mapOfShortestPaths a Map of the shortest paths related to all nodes in the graph
      */
-    public Graph(Map<Data, List<Data>> mapOfShortestPaths){ this.mapOfShortestPaths = mapOfShortestPaths; }
+    public Graph(Map<Node, List<Node>> mapOfShortestPaths){ this.mapOfShortestPaths = mapOfShortestPaths; }
 
     /**
      * A graph of nodes
@@ -58,29 +57,32 @@ public class Graph<Data> {
      * Add a node to the graph
      * @param node the node to add
      */
-    public void addNode(Data node) { this.nodes.add(node); }
+    public void addNode(Node node)
+    {
+//        mapOfShortestPaths.put(node, Dijkstra.)
+        this.nodes.add(node); }
 
     /**
      * Adds a list of nodes to the graph
      * @param nodes the node to add
      */
-    public void addNodes(List<Data> nodes) { this.nodes.addAll(nodes); }
+    public void addNodes(List<Node> nodes) { this.nodes.addAll(nodes); }
     /**
      * Get the Map of the shortest paths related to all nodes in the graph
      * @return a Map of the shortest paths related to all nodes in the graph
      */
-    public Map<Data, List<Data>> getMapOfShortestPaths() { return mapOfShortestPaths; }
+    public Map<Node, List<Node>> getMapOfShortestPaths() { return mapOfShortestPaths; }
     /**
      * Set a Map of the shortest paths related to all nodes in the graph
      * @param mapOfShortestPaths a Map of the shortest paths related to all nodes in the graph
      */
-    public void setMapOfShortestPaths(Map<Data, List<Data>> mapOfShortestPaths) { this.mapOfShortestPaths = mapOfShortestPaths; }
+    public void setMapOfShortestPaths(Map<Node, List<Node>> mapOfShortestPaths) { this.mapOfShortestPaths = mapOfShortestPaths; }
 
     /**
      * Get the set of nodes in the graph
      * @return the set of nodes in the graph
      */
-    public Set<Data> getNodes() {
+    public Set<Node> getNodes() {
         return this.nodes;
     }
 
@@ -88,7 +90,7 @@ public class Graph<Data> {
      * Add a list of nodes to the graph
      * @param nodes the list of nodes to the graph
      */
-    public void setNodes(Set<Data> nodes) {
+    public void setNodes(Set<Node> nodes) {
         this.nodes = nodes;
     }
 
@@ -134,4 +136,5 @@ public class Graph<Data> {
                 "\n\t\"nodes\":" + this.getNodes().stream() +
                 "\n\t}";
     }
+
 }

@@ -8,3 +8,5 @@ pluginManagement {
 }
 
 rootProject.name = 'Node'
+
+includeBuild('../Dijkstra')

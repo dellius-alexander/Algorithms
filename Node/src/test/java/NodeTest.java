@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 public class NodeTest {
 
     @Test
-    public void NodeGraphTest() {
+    public void nodeGraphTest() {
         try {
             Long startTime = System.currentTimeMillis();
             Node<Object, Object, Object> nodeA = new Node<Object, Object, Object>("A", "AA");
@@ -38,8 +38,7 @@ public class NodeTest {
             nodeJ.setCoordinate(new Coordinate<Object, Object>(3, 3));
             nodeK.setCoordinate(new Coordinate<Object, Object>(3, 4));
             nodeL.setCoordinate(new Coordinate<Object, Object>(4, 1));
-
-
+            System.out.printf("\n%s",nodeA);
             nodeA.addAdjacentNode(nodeB, new Distance<Object>(1));
             nodeA.addAdjacentNode(nodeC, new Distance<Object>(1));
             nodeB.addAdjacentNode(nodeD, new Distance<Object>(1));
@@ -83,8 +82,11 @@ public class NodeTest {
                 if (n.equals(nodeA))
                 {
                     result = n;
+                    log.info("{}",n);
                 }
             }
+            Long results0EndTime = System.currentTimeMillis() - startTime;
+            log.info("Runtime: {}",results0EndTime);
             Assert.assertEquals(result,nodeA);
 
         } catch (Exception e) {

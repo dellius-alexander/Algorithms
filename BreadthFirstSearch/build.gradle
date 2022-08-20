@@ -34,7 +34,6 @@ repositories {
 dependencies {
 
     // include local project
-    implementation('org.example:Dijkstra:1.0')
     implementation('org.example:Node:1.0')
 
     // https://mvnrepository.com/artifact/org.json/json
@@ -63,6 +62,13 @@ dependencies {
 
 }
 
+subprojects {
+    build 'org.example:Node:1.0'
+}
+
+task cleanBuildPublish(type: GradleBuild, dependsOn: ['org.example:Node:1.0']) {
+    tasks = ['clean', 'build', 'publish']
+}
 test {
     useTestNG()
 }

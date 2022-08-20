@@ -10,5 +10,4 @@ pluginManagement {
 rootProject.name = 'BreadthFirstSearch'
 
 includeBuild('../Node')
-includeBuild('../Dijkstra')
 

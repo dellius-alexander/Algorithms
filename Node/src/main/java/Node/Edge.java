@@ -127,7 +127,7 @@ public class Edge<D, N>
     public String toString() {
         return "Edge{\n\t\"distance\":" + this.getDistance() +
                 ",\n\t\"destination\":" + this.getNode() +
-                "\n}";
+                "\n\t}";
     }
 
 //    public static void main(String[] args) {

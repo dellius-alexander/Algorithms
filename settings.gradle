@@ -7,5 +7,5 @@ include ':BreadthFirstSearch'
 project(':Node').setProjectDir(new File('./Node/build.gradle'))
 project(':Dijkstra').setProjectDir(new File('./Dijkstra/build.gradle'))
 project(':BreadthFirstSearch').setProjectDir(new File('./BreadthFirstSearch/build.gradle'))
-
+include 'Graph'
 

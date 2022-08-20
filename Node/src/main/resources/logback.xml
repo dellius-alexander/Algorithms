@@ -67,7 +67,7 @@ ERROR 	YES 	  YES 	  YES 	YES 	YES 	  NO
             <pattern>%d{HH:mm:ss.SSS} [%t] [%highlight(%-5level)] [%cyan(%logger{10}.%M)][%L] |- %msg %n</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
+            <level>DEBUG</level>
         </filter>
     </appender>
     <!-- Add ALL appenders to your root logger -->
