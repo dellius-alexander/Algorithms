@@ -17,5 +17,5 @@ space and the search tree. The state space describes the
 that allow transitions from one state to another. The search 
 tree describes paths between these states, reaching towards the 
 goal. The search tree may have multiple paths to (and thus multiple 
-`nodes` for) any given state, but each node in the tree has a unique 
+nodes for) any given state, but each node in the tree has a unique 
 path back to the root (as in all trees).
