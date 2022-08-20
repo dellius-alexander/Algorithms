@@ -179,9 +179,13 @@ public abstract class DijkstraInterface<Name,Data,Metric> {
      * omitted from the initialization process.
      * @param graph the graph
      * @param startNode the start node
+     * @param distance any desired metric system
      * @return the initialized graph
      */
-    public abstract Graph<Node<Name,Data,Metric>> initialize(Graph<Node<Name,Data,Metric>> graph, Node<Name,Data,Metric> startNode, Distance<Metric> distance);
+    public abstract Graph<Node<Name,Data,Metric>> initialize(
+            Graph<Node<Name,Data,Metric>> graph,
+            Node<Name,Data,Metric> startNode,
+            Distance<Metric> distance);
 
     /**
      * This evaluation function provides a means by which to find the edge with the
@@ -201,7 +205,9 @@ public abstract class DijkstraInterface<Name,Data,Metric> {
      * @param childNodeEdge child node
      * @return true if goal state reached, false otherwise
      */
-    public abstract boolean evaluateGoal(Edge<Distance<Metric>, Node<Name,Data,Metric>> parentNodeEdge, Edge<Distance<Metric>, Node<Name,Data,Metric>> childNodeEdge);
+    public abstract boolean evaluateGoal(
+            Edge<Distance<Metric>, Node<Name,Data,Metric>> parentNodeEdge,
+            Edge<Distance<Metric>, Node<Name,Data,Metric>> childNodeEdge);
 
 
 
