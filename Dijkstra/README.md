@@ -1,10 +1,10 @@
-# Dijkstra Algorithm
+# Dijkstra.Dijkstra Algorithm
 
 <hr/>
 
 When actions have different costs, an obvious choice is to use best-first 
 search where the evaluation function is the cost of the path from the root 
-to the current node. This is called Dijkstra’s algorithm by the theoretical 
+to the current node. This is called Dijkstra.Dijkstra’s algorithm by the theoretical 
 computer science community, and uniform-cost search by the AI community. 
 The idea is that while breadth-first search spreads out in waves of uniform 
 depth—first depth 1, then depth 2, and so on—uniform-cost search spreads 
@@ -13,15 +13,15 @@ call to BEST-FIRST- SEARCH with PATH-COST as the evaluation function.
 
 <hr/>
 <pre>
-<h2>Procedure Dijkstra’s Algorithm</h2>
+<h2>Procedure Dijkstra.Dijkstra’s Algorithm</h2>
 <hr/>
-Dijkstra’s algorithm is the method of choice for finding shortest 
+Dijkstra.Dijkstra’s algorithm is the method of choice for finding shortest 
 paths in an edge- and/or vertex-weighted graph. Given a particular 
 start vertex s, it finds the shortest path from s to every other 
 vertex in the graph, including your desired destination t.
 <hr/>
 <h3>
-<strong>Dijkstra( G, d, a, z ):= [a...z]</strong> {shortest path from a to z}
+<strong>Dijkstra.Dijkstra( G, d, a, z ):= [a...z]</strong> {shortest path from a to z}
 </h3>
 {<strong>Below:</strong> G has vertices/edges from a to z,
 a := {v<sub>0</sub>,v<sub>1</sub>,...,v<sub>n</sub>} := z
@@ -29,7 +29,7 @@ and lengths w(v<sub>i</sub>, v<sub>j</sub>)
 where w(v<sub>i</sub>, v<sub>j</sub>) = +Infinity
 if {v<sub>i</sub>, v<sub>j</sub>} is not an edge in G}
 
-Dijkstra(
+Dijkstra.Dijkstra(
     G := digraph,
     d := distance/weight/cost of edges,
     a := start node,

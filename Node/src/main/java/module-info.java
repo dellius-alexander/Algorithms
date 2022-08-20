@@ -1,13 +1,11 @@
 /**
- * Dijkstra Module
+ * Node module
  */
-module Dijkstra {
-
+module Node {
     requires lombok;
     requires org.json;
     requires java.desktop;
     requires org.slf4j;
-    requires Node;
-    exports Dijkstra;
-
+    exports Node;
+    exports Node.Graph;
 }

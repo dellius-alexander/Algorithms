@@ -1,8 +1,7 @@
 plugins {
     id 'java-library'
 }
-
-description = '''Dijkstra algorithm used to find shortest path in a connected graph'''
+description = '''A representation of a node object in a connected graph.'''
 
 group = 'org.example'
 version = '1.0'
@@ -24,8 +23,6 @@ repositories {
 }
 
 dependencies {
-
-    implementation('org.example:Node:1.0')
 
     // https://mvnrepository.com/artifact/org.json/json
     implementation group: 'org.json', name: 'json', version: '20220320'
@@ -50,12 +47,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     testCompileOnly 'org.projectlombok:lombok:1.18.24'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
-
 }
 
 test {
     useTestNG()
 }
-
-
-

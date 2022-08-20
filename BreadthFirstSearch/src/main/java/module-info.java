@@ -8,6 +8,7 @@ module BreadthFirstSearch {
     requires java.desktop;
     requires org.slf4j;
     requires Dijkstra;
+    requires Node;
     exports BreadthFirstSearch;
 
 }

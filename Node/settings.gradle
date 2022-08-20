@@ -7,6 +7,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'Dijkstra'
-
-includeBuild('../Node')
+rootProject.name = 'Node'

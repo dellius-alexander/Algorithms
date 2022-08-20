@@ -1,8 +1,7 @@
-package Dijkstra;
+package Node;
 
 /////////////////////////////////////////////////////////////////////
 
-import java.util.List;
 import java.util.Objects;
 
 /**

@@ -1,16 +1,17 @@
 
 
-import Dijkstra.*;
+import Dijkstra.Dijkstra;
+import Node.*;
+import Node.Graph.Graph;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import java.util.List;
 
 @Slf4j
-public class DijkstraTest {
+public class ImplementDijkstraTest {
     @Test
-    public void dijkstraCalculateShortestPath()
-    {
+    public void dijkstraTest() {
         try {
             Long startTime = System.currentTimeMillis();
             Node<Object,Object,Object> nodeA = new Node<Object,Object,Object>("A", "AA");
@@ -26,7 +27,7 @@ public class DijkstraTest {
             Node<Object,Object,Object> nodeK = new Node<Object,Object,Object>("K", "KK");
             Node<Object,Object,Object> nodeL = new Node<Object,Object,Object>("L", "LL");
 
-            nodeA.setCoordinate( new Coordinate<Object,Object>(1,1));
+            nodeA.setCoordinate(new Coordinate<Object,Object>(1,1));
             nodeB.setCoordinate(new Coordinate<Object,Object>(1,2));
             nodeC.setCoordinate(new Coordinate<Object,Object>(1,3));
             nodeD.setCoordinate(new Coordinate<Object,Object>(1,4));
@@ -63,7 +64,7 @@ public class DijkstraTest {
             nodeL.addAdjacentNode(nodeJ, new Distance<Object>(5));
             nodeL.addAdjacentNode(nodeD, new Distance<Object>(5));
 
-            Graph<Node<Object,Object,Object>> graph = new Graph<Node<Object,Object,Object>>();
+            Graph<Node<Object,Object,Object>> graph = new Graph<>();
 
             graph.addNode(nodeA);
             graph.addNode(nodeB);
@@ -77,7 +78,7 @@ public class DijkstraTest {
             graph.addNode(nodeJ);
             graph.addNode(nodeK);
             graph.addNode(nodeL);
-            Dijkstra<Object> dijkstra = new Dijkstra<>();
+            Dijkstra dijkstra = new Dijkstra();
             List<Node<Object,Object,Object>> results0 =  dijkstra
                     .calculateShortestPath(
                             graph,
@@ -87,10 +88,9 @@ public class DijkstraTest {
 
             nodeA.setShortestPath( results0);
             Long results0EndTime = System.currentTimeMillis() - startTime;
-            log.info("\nRecursive Shortest Path 0:{} \nRuntime: {}\n", results0, results0EndTime);
+            log.info("\nRecursive Shortest Path 0:{} \nRuntime: {}\n", results0.stream().sorted(), results0EndTime);
             boolean found = nodeL.equals(nodeA.getShortestPath().get(0));
             log.info("\nTest Passed: {}",found);
-
             Assert.assertEquals(nodeL,nodeA.getShortestPath().get(0));
 
         } catch (Exception e){

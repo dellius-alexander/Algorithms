@@ -1,7 +1,6 @@
-package Dijkstra;
+package Node.Graph;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /////////////////////////////////////////////////////////////////////
 
@@ -26,6 +25,7 @@ public class Graph<Data> {
      * Map of the shortest paths
      */
     private Map<Data, List<Data>> mapOfShortestPaths = new TreeMap<>();
+
 
     /**
      * Graph of nodes

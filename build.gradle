@@ -24,3 +24,9 @@ repositories {
 dependencies {
     testCompileOnly group: 'org.testng', name: 'testng', version: '7.6.0'
 }
+
+subprojects {
+    test{
+        useTestNG()
+    }
+}

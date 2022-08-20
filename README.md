@@ -15,7 +15,7 @@ input instances and transforms it to the desired output.
 
 <ol id="algorithm-list">
     <li>
-        <a href="./Dijkstra/README.md" id="dijkstra">Dijkstra Algorithm</a>
+        <a href="./Dijkstra/README.md" id="dijkstra">Dijkstra.Dijkstra Algorithm</a>
     </li>
     <li>
         <a href="./BreadthFirstSearch/README.md" id="breadthFirstSearch">BreadthFirstSearch Algorithm</a>

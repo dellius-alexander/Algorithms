@@ -1,12 +1,13 @@
 package BreadthFirstSearch;
 
 
-import Dijkstra.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.stream.Collectors;
+
+import Node.Graph.*;
+import Node.*;
 
 public class BreadthFirstSearch {
     private final static Logger log = LoggerFactory.getLogger(BreadthFirstSearch.class);
