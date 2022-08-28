@@ -1,11 +1,9 @@
 package Dijkstra;
 
-import Node.Graph.Graph;
+import Graph.*;
 import Node.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.LinkedList;
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -17,9 +15,7 @@ import java.util.List;
  * @param <Metric> the system of measurement used to evaluate the cost|weight|distance of
  *                node traversal across edges between nodes.
  */
-public abstract class DijkstraInterface<Id,Data,Metric> {
-
-    private static final Logger log = LoggerFactory.getLogger(DijkstraInterface.class);
+public interface DijkstraInterface<Id,Data,Metric> extends Serializable {
 
     /**
      * <h2>Procedure Algorithm Dijkstra’s Algorithm</h2>
@@ -99,90 +95,11 @@ public abstract class DijkstraInterface<Id,Data,Metric> {
      * shortest path from start node to destination node z.
      * @see Node
      */
-    public List<Node<Id,Data,Metric>> calculateShortestPath(
+    List<Node<Id,Data,Metric>> calculateShortestPath(
             Graph<Node<Id,Data,Metric>> graph,
             Distance<Metric> distance,
             Node<Id,Data,Metric> startNode,
-            Node<Id,Data,Metric> destinationNode) {
-        log.info("\nInitialization......\nStart Node: {}\n",startNode);
-
-        // create two lists, undiscovered/unsettled nodes and discovered/settled nodes;
-        // contains all unexplored nodes
-        List<Edge<Distance<Metric>, Node<Id,Data,Metric>>> frontier = new LinkedList<>();
-        // contains the path explored to the destination node
-        List<Node<Id,Data,Metric>> shortestPath = new LinkedList<>();
-
-        // initialize all nodes distance to +Infinity;
-        // and start node distance to 0 or some method
-        graph = initialize(graph, startNode, distance);
-        // add the start node to unsettled node list
-        frontier.add(
-                new Edge<>(
-                        distance,
-                        startNode
-                )
-        );
-
-        // get the node on with the smallest/minimum distance
-        Edge<Distance<Metric>,Node<Id,Data,Metric>> parentNodeEdge = getMinimumCostNodeEdge(frontier);
-
-        // for each neighbor adjacent node of the minimum distance node, where n has not yet been
-        // removed from unsettled nodes do;
-        for (Edge<Distance<Metric>, Node<Id,Data,Metric>> childNodeEdge : parentNodeEdge.getNode().getEdges())
-        {
-
-            // temp container for nodes discovered on the frontier aka settled nodes
-            List<Node<Id,Data,Metric>> tempShortestPath = new LinkedList<>();
-
-            // node adjacent to start node
-            Node<Id,Data,Metric> adjacentNode = childNodeEdge.getNode();
-
-            // remove minimal node from the undiscovered frontier/unsettled nodes list
-            frontier.remove(parentNodeEdge);
-
-            // evaluate parent and child node;
-            // update child node to reflect cost evaluation
-            // function; this function depends on the
-            // object domain, such as temperature, mileage, degrees,
-            // primitives, binary digit, etc.
-            if (evaluateGoal(parentNodeEdge,childNodeEdge))
-            {
-
-                log.info("\nUpdated Node: {}\n", childNodeEdge);
-
-                // add the adjacent node to the undiscovered frontier/unsettled nodes list for later processing
-                frontier.add(childNodeEdge);
-                // if destination node not in discovered/settled node initiate recursive call
-                if (!shortestPath.contains(destinationNode))
-                {
-                    // continue as long as we have undiscovered nodes on the frontier
-                    // add unexplored node to settledNode list
-                    tempShortestPath.addAll(calculateShortestPath(
-                            graph,
-                            adjacentNode.getDistance(),
-                            adjacentNode,
-                            destinationNode)
-                    );
-                }
-            }
-            // remove any undesired paths with accumulated distance greater than the
-            // accumulated distance of the destination node
-            if (tempShortestPath.contains(destinationNode))
-            {
-                // add the cleansed temp list to the settled node
-                shortestPath.addAll(tempShortestPath);
-            }
-        }
-
-        // our look back or back up; add previous node to discovered list of settled nodes;
-        shortestPath.addAll(List.of(parentNodeEdge.getNode()));
-
-        log.info("\nReturned Settled Nodes: {}\n",
-                shortestPath);
-
-        return shortestPath;
-    }
-
+            Node<Id,Data,Metric> destinationNode);
     /**
      * Initialize each node metric parameter to fit the problem domain. The
      * start node on the other hand must be settled and omitted from the
@@ -192,7 +109,7 @@ public abstract class DijkstraInterface<Id,Data,Metric> {
      * @param distance the initial starting distance
      * @return the initialized graph
      */
-    public abstract Graph<Node<Id,Data,Metric>> initialize(
+    Graph<Node<Id,Data,Metric>> initialize(
             Graph<Node<Id,Data,Metric>> graph,
             Node<Id,Data,Metric> startNode,
             Distance<Metric> distance);
@@ -205,7 +122,7 @@ public abstract class DijkstraInterface<Id,Data,Metric> {
      * @see Distance
      * @see Node
      */
-    public abstract Edge<Distance<Metric>, Node<Id,Data,Metric>> getMinimumCostNodeEdge(
+    Edge<Distance<Metric>, Node<Id,Data,Metric>> getMinimumCostNodeEdge(
             List<Edge<Distance<Metric>, Node<Id,Data,Metric>>> nodes);
 
     /**
@@ -217,7 +134,7 @@ public abstract class DijkstraInterface<Id,Data,Metric> {
      * @param childNodeEdge child node
      * @return true if goal state reached, false otherwise
      */
-    public abstract boolean evaluateGoal(
+    boolean evaluateGoal(
             Edge<Distance<Metric>, Node<Id,Data,Metric>> parentNodeEdge,
             Edge<Distance<Metric>, Node<Id,Data,Metric>> childNodeEdge);
 

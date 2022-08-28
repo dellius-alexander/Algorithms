@@ -7,5 +7,5 @@ module Node {
     requires org.slf4j;
 //    requires Dijkstra;
     exports Node;
-    exports Node.Graph;
+    exports Graph;
 }

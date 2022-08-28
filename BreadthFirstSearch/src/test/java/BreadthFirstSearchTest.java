@@ -1,6 +1,6 @@
 import BreadthFirstSearch.BreadthFirstSearch;
+import Graph.Graph;
 import Node.*;
-import Node.Graph.*;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -64,7 +64,7 @@ public class BreadthFirstSearchTest {
             nodeL.addAdjacentNode(nodeJ, new Distance<>(1));
             nodeL.addAdjacentNode(nodeD, new Distance<>(1));
             /////////////////////////////////////////////////////////
-            Graph<Node<String,String,Integer>> graph = new Graph<>();
+            Graph<Node<String,String,Integer>> graph = new Graph<Node<String, String, Integer>>();
             /////////////////////////////////////////////////////////
             graph.addNode(nodeA);
             graph.addNode(nodeB);

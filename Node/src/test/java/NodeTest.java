@@ -1,5 +1,5 @@
 import Node.*;
-import Node.Graph.Graph;
+import Graph.Graph;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -61,7 +61,7 @@ public class NodeTest {
             nodeL.addAdjacentNode(nodeJ, new Distance<Object>(5));
             nodeL.addAdjacentNode(nodeD, new Distance<Object>(5));
 
-            Graph<Node<Object, Object, Object>> graph = new Graph<>();
+            Graph<Node<Object, Object, Object>> graph = new Graph<Node<Object, Object, Object>>();
 
             graph.addNode(nodeA);
             graph.addNode(nodeB);

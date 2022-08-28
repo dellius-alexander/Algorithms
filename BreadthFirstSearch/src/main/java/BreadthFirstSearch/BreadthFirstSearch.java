@@ -1,12 +1,11 @@
 package BreadthFirstSearch;
 
 
+import Graph.Graph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayDeque;
 import java.util.Queue;
-
-import Node.Graph.*;
 import Node.*;
 
 public class BreadthFirstSearch {
