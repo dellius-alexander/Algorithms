@@ -4,7 +4,11 @@ import Graph.*;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class ImplementDijkstraTest {
@@ -78,20 +82,28 @@ public class ImplementDijkstraTest {
             graph.addNode(nodeK);
             graph.addNode(nodeL);
             Dijkstra dijkstra = new Dijkstra();
-            List<Node<Object,Object,Object>> results0 =  dijkstra
+            List<Node<Object,Object,Object>> results =  dijkstra
                     .calculateShortestPath(
                             graph,
                             new Distance<Object>(0),
                             nodeA,
                             nodeL);
 
-            nodeA.setShortestPath( results0);
+            nodeA.setShortestPath( results );
             Long results0EndTime = System.currentTimeMillis() - startTime;
-            log.info("\nRecursive Shortest Path 0:{} \nRuntime: {}\n", results0.stream().sorted(), results0EndTime);
+            log.info("\nRecursive Shortest Path 0:" );
+            results.forEach(
+                            n -> n.getShortestPath()
+                                    .forEach(
+                                            node -> System.out.printf("\n%s\n",
+                                                    node.toString())
+                                    )
+                    );
+            log.info(" \nRuntime: {}\n", results0EndTime);
             boolean found = nodeL.equals(nodeA.getShortestPath().get(0));
             log.info("\nTest Passed: {}",found);
 
-            Assert.assertEquals(results0.size(),nodeA.getShortestPath().size());
+            Assert.assertEquals(results.size(),nodeA.getShortestPath().size());
 
         } catch (Exception e){
             log.error(e.getLocalizedMessage());

@@ -162,6 +162,9 @@ public abstract class DijkstraAbstract<Id, Data, Metric> implements DijkstraInte
                             adjacentNode,
                             destinationNode)
                     );
+                    // update the path to destination node for each node leading
+                    // up to the destination node
+                    childNodeEdge.getNode().setShortestPath(tempShortestPath);
                 }
             }
             // remove any undesired paths with accumulated distance greater than the

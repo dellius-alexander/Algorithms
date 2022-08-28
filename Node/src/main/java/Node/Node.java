@@ -6,6 +6,7 @@ import lombok.NonNull;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -314,9 +315,9 @@ public class Node<Name, Data, Metric> implements Comparable<Node<Name, Data, Met
                 "\n\t\"name\":" + getName() +
                 ",\n\t\"data\":" + getData() +
                 ",\n\t\"coordinate\":" + getCoordinate() +
-//                ",\n\t\"shortestPath\":" + getShortestPath().stream().collect(Collectors.toUnmodifiableList()) +
-                ",\n\t\"distance\":" + getDistance().toString() +
-//                ",\n\t\"edges\":\"" + getEdges().stream().collect(Collectors.toUnmodifiableList()) +
+                ",\n\t\"shortestPath\":" + getShortestPath().size() +
+                ",\n\t\"distance\":" + getDistance() +
+                ",\n\t\"edges\":\"" + getEdges().size() +
                 "\n\t}";
 
     }
