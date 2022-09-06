@@ -53,6 +53,9 @@ jobs:
         with:
           gradle-version: 7.1
           arguments: |
+            :BreadthFirstSearch:build
+            :Dijkstra:build
+            :Node:build
             build
             --dry-run
       - name: Verify Repository Contents
@@ -65,7 +68,6 @@ jobs:
           arguments: |
             :BreadthFirstSearch:build
             :Dijkstra:build
-            :Graph:build
             :Node:build
             build
 
