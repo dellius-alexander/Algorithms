@@ -49,8 +49,14 @@ jobs:
           java-version: 11
 
       - name: Verify Repository Contents Pre-Build
+        if: ${{ matrix.os  != 'windows-latest' }}
         run: |
           ls -liaR
+
+      - name: Verify Repository Contents Pre-Build
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          Get-Childitem -Path '.' -recurse
 
       - name: Setup Gradle and Execute Dry Run
         uses: gradle/gradle-build-action@v2
