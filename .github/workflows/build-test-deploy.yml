@@ -70,8 +70,14 @@ jobs:
             test
 
       - name: Verify Repository Contents Post-Build
+        if: ${{ matrix.os !=  windows* }}
         run: |
           ls -liaR
+
+      - name: Verify Repository Contents Post-Build
+        if: ${{ matrix.os ==  windows* }}
+        run: |
+          Get-Childitem -Path '.' -recurse
 
       - name: Preparing build and test artifacts
         run: |
