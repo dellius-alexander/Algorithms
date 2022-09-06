@@ -36,7 +36,7 @@ concurrency:
 
 jobs:
   # This job will perform build and tests on project package.
-  Build:
+  build-test:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
@@ -77,21 +77,27 @@ jobs:
       - name: Step 5 - Persist build artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: csci4320-artifact
-          path: build/libs
+          name: algorithms-artifact
+          path: |
+            BreadthFirstSearch/build/libs
+            Dijkstra/build/libs
+            Node/build/libs
 
       - name: Step 6 - Persist Test Results
         uses: actions/upload-artifact@v2
         with:
-          name: csci4320-test-results
-          path: build/reports/tests
+          name: algorithms-test-results
+          path: |
+            BreadthFirstSearch/build/reports/tests/test
+            Dijkstra/build/reports/tests/test
+            Node/build/reports/tests/test
 
   # This job will attempt to merge only on success Build job completion.
   merge-me:
     # Automatic Merge will not occur unless a successful Build and Test Run
     # List all required job names here.
     needs:
-      - Build
+      - build-test
     runs-on: ubuntu-latest
     steps:
       - # It is often a desired behavior to merge only when a workflow execution
@@ -112,7 +118,7 @@ jobs:
   deploy:
     if: ${{ github.ref == 'refs/heads/main' }}
     needs:
-      - Build
+      - build-test
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -129,7 +135,7 @@ jobs:
         with:
           # Optional, workflow file name or ID
           # If not specified, will be inferred from run_id (if run_id is specified), or will be the current workflow
-          workflow: gradle_build.yml
+          workflow: build-test-deploy.yml
           # Optional, the status or conclusion of a completed workflow to search for
           # Can be one of a workflow conclusion:
           #   "failure", "success", "neutral", "cancelled", "skipped", "timed_out", "action_required"
@@ -153,7 +159,7 @@ jobs:
           # will download all artifacts if not specified
           # and extract them into respective subdirectories
           # https://github.com/actions/download-artifact#download-all-artifacts
-          name: csci4320-test-results
+          name: algorithms-test-results
           # Optional, a directory where to extract artifact(s), defaults to the current directory
           path: '.'
           #          # Optional, defaults to current repo
@@ -182,7 +188,12 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: './test'
+          path: |
+            BreadthFirstSearch/build/reports/tests/test
+            Dijkstra/build/reports/tests/test
+            Node/build/reports/tests/test
+          files: |
+            README.md
           # Depending on branch protection rules, a  manually populated
           # `GITHUB_TOKEN_WORKAROUND` secret with permissions to push to
           # a protected branch must be used. This secret can have an arbitrary
