@@ -76,11 +76,8 @@ jobs:
       - name: Preparing build and test artifacts
         run: |
           mkdir -p staging  tests/BreadthFirstSearch tests/Dijkstra tests/Node
-#          cp README.md tests
           cp BreadthFirstSearch/build/libs/*.jar Dijkstra/build/libs/*.jar  Node/build/libs/*.jar staging
-#          cp -R  BreadthFirstSearch/build/reports/tests/test tests/BreadthFirstSearch
-#          cp -R  Dijkstra/build/reports/tests/test tests/Dijkstra
-#          cp -R  Node/build/reports/tests/test tests/Node
+
 
       - name: Setup a cache for Gradle
         uses: actions/cache@v2
