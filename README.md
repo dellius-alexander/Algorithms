@@ -1,10 +1,10 @@
-[![Build, Test, Deploy Github Pages](https://github.com/dellius-alexander/Algorithms/actions/workflows/build-test-deploy.yml/badge.svg?branch=main&event=pull_request)](https://github.com/dellius-alexander/Algorithms/actions/workflows/build-test-deploy.yml)
+[![Build, Test, Deploy Github Pages](https://github.com/dellius-alexander/Algorithms/actions/workflows/build-test-deploy.yml/badge.svg?branch=main&event=pull_request&event=push)](https://github.com/dellius-alexander/Algorithms/actions/workflows/build-test-deploy.yml)
 
-[BreadthFirstSearch Test Results](https://dellius-alexander.github.io/Algorithms/BreadthFirstSearch/build/reports/tests/test)
+[BreadthFirstSearch Test Results](https://dellius-alexander.github.io/Algorithms/BreadthFirstSearch)
 
-[Dijkstra Test Results](https://dellius-alexander.github.io/Algorithms/Dijkstra/build/reports/tests/test)
+[Dijkstra Test Results](https://dellius-alexander.github.io/Algorithms/Dijkstra)
 
-[Node Test Results](https://dellius-alexander.github.io/Algorithms/Node/build/reports/tests/test)
+[Node Test Results](https://dellius-alexander.github.io/Algorithms/Node)
 
 ---
 

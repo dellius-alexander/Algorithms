@@ -48,24 +48,34 @@ jobs:
           distribution: temurin
           java-version: 11
 
-      - name: Step 1 - Setup Gradle and Execute Dry Run
+      - name: Setup Gradle and Execute Dry Run
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 7.1
           arguments: |
             build
             --dry-run
-      - name: Step 2 - Verify Repository Contents
+      - name: Verify Repository Contents
         run: |
           ls
-      - name: Step 3 - Execute Package build
+      - name: Execute Package build
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 7.1
           arguments: |
             build
             test
-      - name: Step 4 - Setup a cache for Gradle
+
+      - name: Preparing build and test artifacts
+        run: |
+          mkdir -p staging  tests/BreadthFirstSearch tests/Dijkstra tests/Node
+          cp README.md tests
+          cp BreadthFirstSearch/build/libs/*.jar Dijkstra/build/libs/*.jar  Node/build/libs/*.jar staging
+          cp -R  BreadthFirstSearch/build/reports/tests/test tests/BreadthFirstSearch
+          cp -R  Dijkstra/build/reports/tests/test tests/Dijkstra
+          cp -R  Node/build/reports/tests/test tests/Node
+
+      - name: Setup a cache for Gradle
         uses: actions/cache@v2
         with:
           path: |
@@ -74,23 +84,18 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Step 5 - Persist build artifacts
+
+      - name: Persist build artifacts
         uses: actions/upload-artifact@v2
         with:
           name: algorithms-artifact
-          path: |
-            BreadthFirstSearch/build/libs
-            Dijkstra/build/libs
-            Node/build/libs
+          path: staging
 
-      - name: Step 6 - Persist Test Results
+      - name: Persist Test Results
         uses: actions/upload-artifact@v2
         with:
           name: algorithms-test-results
-          path: |
-            BreadthFirstSearch/build/reports/tests/test
-            Dijkstra/build/reports/tests/test
-            Node/build/reports/tests/test
+          path: tests
 
   # This job will attempt to merge only on success Build job completion.
   merge-me:
@@ -188,12 +193,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: |
-            BreadthFirstSearch/build/reports/tests/test
-            Dijkstra/build/reports/tests/test
-            Node/build/reports/tests/test
-          files: |
-            README.md
+          path: '.'
           # Depending on branch protection rules, a  manually populated
           # `GITHUB_TOKEN_WORKAROUND` secret with permissions to push to
           # a protected branch must be used. This secret can have an arbitrary
