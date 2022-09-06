@@ -63,10 +63,15 @@ jobs:
         with:
           gradle-version: 7.1
           arguments: |
+            :BreadthFirstSearch:build
+            :Dijkstra:build
+            :Graph:build
+            :Node:build
             build
-            test
 
-      - name: Preparing build and test artifacts
+
+
+- name: Preparing build and test artifacts
         run: |
           mkdir -p staging  tests/BreadthFirstSearch tests/Dijkstra tests/Node
           cp README.md tests
