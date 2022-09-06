@@ -70,12 +70,12 @@ jobs:
             test
 
       - name: Verify Repository Contents Post-Build Linux OS and MacOS
-        if: ${{ matrix.os }} != 'windows-latest'
+        if: ${{ matrix.os  != 'windows-latest' }}
         run: |
           ls -liaR
 
       - name: Verify Repository Contents Post-Build Windows OS
-        if: ${{ matrix.os }} == 'windows-latest'
+        if: ${{ matrix.os == 'windows-latest' }}
         run: |
           Get-Childitem -Path '.' -recurse
 
