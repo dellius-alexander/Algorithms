@@ -55,19 +55,15 @@ dependencies {
 
 }
 
-//subprojects {
-//    build 'org.example:Node:1.0'
-//}
+subprojects {
+    build 'org.example:Node:1.0'
+}
 
 task cleanBuildPublish(type: GradleBuild, dependsOn: ['org.example:Node:1.0']) {
     tasks = ['clean', 'build', 'publish']
 }
 
 test {
-    group = 'verification'
-    // refer to source set that contains shared tests
-    testClassesDirs = sourceSets.test.output.classesDirs
-
     useTestNG()
 }
 

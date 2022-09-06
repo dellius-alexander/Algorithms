@@ -48,12 +48,12 @@ jobs:
           distribution: temurin
           java-version: 11
 
-      - name: Verify Repository Contents Pre-Build
+      - name: Verify Repository Contents Pre-Build on Linux OS and MacOS
         if: ${{ matrix.os  != 'windows-latest' }}
         run: |
           ls -liaR
 
-      - name: Verify Repository Contents Pre-Build
+      - name: Verify Repository Contents Pre-Build on Windows OS
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
           Get-Childitem -Path '.' -recurse
@@ -75,21 +75,34 @@ jobs:
             build
             test
 
-      - name: Verify Repository Contents Post-Build Linux OS and MacOS
+      - name: Verify Repository Contents Post-Build on Linux OS and MacOS
         if: ${{ matrix.os  != 'windows-latest' }}
         run: |
           ls -liaR
 
-      - name: Verify Repository Contents Post-Build Windows OS
+      - name: Verify Repository Contents Post-Build on Windows OS
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
           Get-Childitem -Path '.' -recurse
 
-      - name: Preparing build and test artifacts
+      - name: Preparing build and test artifacts on Linux OS and MacOS
+        if: ${{ matrix.os  != 'windows-latest' }}
         run: |
           mkdir -p staging  tests/BreadthFirstSearch tests/Dijkstra tests/Node
           cp BreadthFirstSearch/build/libs/*.jar Dijkstra/build/libs/*.jar  Node/build/libs/*.jar staging
 
+      - name: Preparing build and test artifacts on Windows OS
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          New-Item -Path '.'  -Name 'staging'  -ItemType 'Directory' 
+          New-Item -Path '.'  -Name 'tests'  -ItemType 'Directory'
+          New-Item -Path '.'  -Name 'tests\BreadthFirstSearch'  -ItemType 'Directory' 
+          New-Item -Path '.'  -Name 'tests\Dijkstra'  -ItemType 'Directory' 
+          New-Item -Path '.'  -Name 'tests\Node'  -ItemType 'Directory'
+          
+          Copy-Item -Path ".\BreadthFirstSearch\build\libs\*.jar" -Destination ".\staging" -Recurse
+          Copy-Item -Path ".\Dijkstra\build\libs\*.jar" -Destination ".\staging" -Recurse
+          Copy-Item -Path ".\Node\build\libs\*.jar" -Destination ".\staging" -Recurse
 
       - name: Setup a cache for Gradle
         uses: actions/cache@v2

@@ -49,16 +49,6 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
-//task test(type: Test) {
-//    group = 'verification'
-//    // refer to source set that contains shared tests
-//    testClassesDirs = sourceSets.test.output.classesDirs
-//}
-
 test {
-    group = 'verification'
-    // refer to source set that contains shared tests
-    testClassesDirs = sourceSets.test.output.classesDirs
-
     useTestNG()
 }

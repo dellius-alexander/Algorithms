@@ -30,21 +30,31 @@ compileJava {
 
 dependencies {
     implementation('org.example:Node:1.0')
-
     implementation('org.example:Dijkstra:1.0')
-
     implementation('org.example:BreadthFirstSearch:1.0')
 
-    testCompileOnly group: 'org.testng', name: 'testng', version: '7.6.0'
+    testCompileOnly('org.example:Node:1.0')
+    testCompileOnly('org.example:Dijkstra:1.0')
+    testCompileOnly('org.example:BreadthFirstSearch:1.0')
+
+    testRuntimeOnly('org.example:Node:1.0')
+    testRuntimeOnly('org.example:Dijkstra:1.0')
+    testRuntimeOnly('org.example:BreadthFirstSearch:1.0')
+
+    testCompileClasspath('org.example:Node:1.0')
+    testCompileClasspath('org.example:Dijkstra:1.0')
+    testCompileClasspath('org.example:BreadthFirstSearch:1.0')
+
     testImplementation group: 'org.testng', name: 'testng', version: '7.6.0'
+
 }
 
-subprojects {
-    test {
-        group = 'verification'
-        useTestNG()
-    }
+test {
+    useTestNG()
 }
+
+
+
 
 
 
