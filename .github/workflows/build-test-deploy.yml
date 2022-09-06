@@ -99,7 +99,6 @@ jobs:
           New-Item -Path '.'  -Name 'tests\BreadthFirstSearch'  -ItemType 'Directory' 
           New-Item -Path '.'  -Name 'tests\Dijkstra'  -ItemType 'Directory' 
           New-Item -Path '.'  -Name 'tests\Node'  -ItemType 'Directory'
-          
           Copy-Item -Path ".\BreadthFirstSearch\build\libs\*.jar" -Destination ".\staging" -Recurse
           Copy-Item -Path ".\Dijkstra\build\libs\*.jar" -Destination ".\staging" -Recurse
           Copy-Item -Path ".\Node\build\libs\*.jar" -Destination ".\staging" -Recurse
