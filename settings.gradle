@@ -1,11 +1,14 @@
+pluginManagement {
+    repositories {
+        maven { url 'https://repo.spring.io/milestone' }
+        maven { url 'https://repo.spring.io/snapshot' }
+        gradlePluginPortal()
+    }
+}
+
 rootProject.name = 'Algorithms'
 
-include ':Node'
-include ':Dijkstra'
-include ':BreadthFirstSearch'
-
-project(':Node').setProjectDir(new File('./Node/build.gradle'))
-project(':Dijkstra').setProjectDir(new File('./Dijkstra/build.gradle'))
-project(':BreadthFirstSearch').setProjectDir(new File('./BreadthFirstSearch/build.gradle'))
-
+includeBuild('./Node')
+includeBuild('./Dijkstra')
+includeBuild('./BreadthFirstSearch')
 

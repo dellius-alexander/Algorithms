@@ -57,10 +57,8 @@ jobs:
         with:
           gradle-version: 7.1
           arguments: |
-            :BreadthFirstSearch:build
-            :Dijkstra:build
-            :Node:build
             build
+            test
             --dry-run
 
       - name: Execute Package build
@@ -68,10 +66,8 @@ jobs:
         with:
           gradle-version: 7.1
           arguments: |
-            :BreadthFirstSearch:build
-            :Dijkstra:build
-            :Node:build
             build
+            test
 
       - name: Verify Repository Contents Post-Build
         run: |
@@ -80,11 +76,11 @@ jobs:
       - name: Preparing build and test artifacts
         run: |
           mkdir -p staging  tests/BreadthFirstSearch tests/Dijkstra tests/Node
-          cp README.md tests
+#          cp README.md tests
           cp BreadthFirstSearch/build/libs/*.jar Dijkstra/build/libs/*.jar  Node/build/libs/*.jar staging
-          cp -R  BreadthFirstSearch/build/reports/tests/test tests/BreadthFirstSearch
-          cp -R  Dijkstra/build/reports/tests/test tests/Dijkstra
-          cp -R  Node/build/reports/tests/test tests/Node
+#          cp -R  BreadthFirstSearch/build/reports/tests/test tests/BreadthFirstSearch
+#          cp -R  Dijkstra/build/reports/tests/test tests/Dijkstra
+#          cp -R  Node/build/reports/tests/test tests/Node
 
       - name: Setup a cache for Gradle
         uses: actions/cache@v2
@@ -102,11 +98,11 @@ jobs:
           name: algorithms-artifact
           path: staging
 
-      - name: Persist Test Results
-        uses: actions/upload-artifact@v2
-        with:
-          name: algorithms-test-results
-          path: tests
+#      - name: Persist Test Results
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: algorithms-test-results
+#          path: tests
 
   # This job will attempt to merge only on success Build job completion.
   merge-me:
@@ -146,65 +142,66 @@ jobs:
       - name: Project Contents
         run: |
           ls -liaR
-      - name: Download a Build Artifact
-        uses: actions/download-artifact@v3.0.0
-        with:
-          # Optional, workflow file name or ID
-          # If not specified, will be inferred from run_id (if run_id is specified), or will be the current workflow
-          workflow: build-test-deploy.yml
-          # Optional, the status or conclusion of a completed workflow to search for
-          # Can be one of a workflow conclusion:
-          #   "failure", "success", "neutral", "cancelled", "skipped", "timed_out", "action_required"
-          # Or a workflow status:
-          #   "completed", "in_progress", "queued"
-          #          # Use the empty string ("") to ignore status or conclusion in the search
-          #          workflow_conclusion: success
-          #          # Optional, will get head commit SHA
-          #          pr: ${{github.event.pull_request.number}}
-          #          # Optional, no need to specify if PR is
-          #          commit: ${{github.event.pull_request.head.sha}}
-          # Optional, will use the specified branch. Defaults to all branches
-          branch: main
-          #          # Optional, defaults to all types
-          #          event: push
-          #          # Optional, will use specified workflow run
-          #          run_id: 1122334455
-          #          # Optional, run number from the workflow
-          #          run_number: 34
-          # Optional, uploaded artifact name,
-          # will download all artifacts if not specified
-          # and extract them into respective subdirectories
-          # https://github.com/actions/download-artifact#download-all-artifacts
-          name: algorithms-test-results
-          # Optional, a directory where to extract artifact(s), defaults to the current directory
-          path: '.'
-          #          # Optional, defaults to current repo
-          #          repo: ${{ github.repository }}
-          #          # Optional, check the workflow run to whether it has an artifact
-          #          # then will get the last available artifact from the previous workflow
-          #          # default false, just try to download from the last one
-          #          check_artifacts: false
-          #          # Optional, search for the last workflow run whose stored an artifact named as in `name` input
-          #          # default false
-          #          search_artifacts: false
-          #          # Optional, choose to skip unpacking the downloaded artifact(s)
-          #          # default false
-          #          skip_unpack: false
-          #          # Optional, choose how to exit the action if no artifact is found
-          #          # can be one of:
-          #          #  "fail", "warn", "ignore"
-          #          # default fail
-          #          if_no_artifact_found: fail
-          # Optional, GitHub token, a Personal Access Token with `public_repo` scope if needed
-          # Required, if the artifact is from a different repo
-          # Required, if the repo is private a Personal Access Token with `repo` scope is needed
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+#      - name: Download a Build Artifact
+#        uses: actions/download-artifact@v3.0.0
+#        with:
+#          # Optional, workflow file name or ID
+#          # If not specified, will be inferred from run_id (if run_id is specified), or will be the current workflow
+#          workflow: build-test-deploy.yml
+#          # Optional, the status or conclusion of a completed workflow to search for
+#          # Can be one of a workflow conclusion:
+#          #   "failure", "success", "neutral", "cancelled", "skipped", "timed_out", "action_required"
+#          # Or a workflow status:
+#          #   "completed", "in_progress", "queued"
+#          #          # Use the empty string ("") to ignore status or conclusion in the search
+#          #          workflow_conclusion: success
+#          #          # Optional, will get head commit SHA
+#          #          pr: ${{github.event.pull_request.number}}
+#          #          # Optional, no need to specify if PR is
+#          #          commit: ${{github.event.pull_request.head.sha}}
+#          # Optional, will use the specified branch. Defaults to all branches
+#          branch: main
+#          #          # Optional, defaults to all types
+#          #          event: push
+#          #          # Optional, will use specified workflow run
+#          #          run_id: 1122334455
+#          #          # Optional, run number from the workflow
+#          #          run_number: 34
+#          # Optional, uploaded artifact name,
+#          # will download all artifacts if not specified
+#          # and extract them into respective subdirectories
+#          # https://github.com/actions/download-artifact#download-all-artifacts
+#          name: algorithms-test-results
+#          # Optional, a directory where to extract artifact(s), defaults to the current directory
+#          path: '.'
+#          #          # Optional, defaults to current repo
+#          #          repo: ${{ github.repository }}
+#          #          # Optional, check the workflow run to whether it has an artifact
+#          #          # then will get the last available artifact from the previous workflow
+#          #          # default false, just try to download from the last one
+#          #          check_artifacts: false
+#          #          # Optional, search for the last workflow run whose stored an artifact named as in `name` input
+#          #          # default false
+#          #          search_artifacts: false
+#          #          # Optional, choose to skip unpacking the downloaded artifact(s)
+#          #          # default false
+#          #          skip_unpack: false
+#          #          # Optional, choose how to exit the action if no artifact is found
+#          #          # can be one of:
+#          #          #  "fail", "warn", "ignore"
+#          #          # default fail
+#          #          if_no_artifact_found: fail
+#          # Optional, GitHub token, a Personal Access Token with `public_repo` scope if needed
+#          # Required, if the artifact is from a different repo
+#          # Required, if the repo is private a Personal Access Token with `repo` scope is needed
+#          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: '.'
+          path: './README.md'
           # Depending on branch protection rules, a  manually populated
           # `GITHUB_TOKEN_WORKAROUND` secret with permissions to push to
           # a protected branch must be used. This secret can have an arbitrary

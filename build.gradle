@@ -18,19 +18,35 @@ group = 'org.example'
 version = '1.0'
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
+compileJava {
+    options.compilerArgs.addAll(['-Xlint:unchecked'])
+    options.deprecation = true
+}
+
+
 dependencies {
+    implementation('org.example:Node:1.0')
+
+    implementation('org.example:Dijkstra:1.0')
+
+    implementation('org.example:BreadthFirstSearch:1.0')
+
     testCompileOnly group: 'org.testng', name: 'testng', version: '7.6.0'
     testImplementation group: 'org.testng', name: 'testng', version: '7.6.0'
 }
 
-test{
-    subprojects {
-        test{
-            useTestNG()
-        }
+subprojects {
+    test {
+        group = 'verification'
+        useTestNG()
     }
 }
+
+
+
+
 
