@@ -69,9 +69,7 @@ jobs:
             :Node:build
             build
 
-
-
-- name: Preparing build and test artifacts
+      - name: Preparing build and test artifacts
         run: |
           mkdir -p staging  tests/BreadthFirstSearch tests/Dijkstra tests/Node
           cp README.md tests
