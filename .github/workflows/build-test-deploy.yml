@@ -1,0 +1,199 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+##########################################################################
+# This workflow will build a Java project with Gradle and
+# cache/restore any dependencies to improve the workflow execution time
+##########################################################################
+name: 'Build, Test, Deploy Github Pages'
+on:
+  push:
+    branches:
+      - 'main'
+      - 'release*'
+      - '*'
+
+  pull_request:
+    branches:
+      - 'main'
+      - 'release*'
+      - '*'
+
+#  # Allows you to run this workflow manually from the Actions tab
+#  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # This job will perform build and tests on project package.
+  Build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 11
+
+      - name: Step 1 - Setup Gradle and Execute Dry Run
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.1
+          arguments: |
+            build
+            --dry-run
+      - name: Step 2 - Verify Repository Contents
+        run: |
+          ls
+      - name: Step 3 - Execute Package build
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.1
+          arguments: |
+            build
+            test
+      - name: Step 4 - Setup a cache for Gradle
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Step 5 - Persist build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: csci4320-artifact
+          path: build/libs
+
+      - name: Step 6 - Persist Test Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: csci4320-test-results
+          path: build/reports/tests
+
+  # This job will attempt to merge only on success Build job completion.
+  merge-me:
+    # Automatic Merge will not occur unless a successful Build and Test Run
+    # List all required job names here.
+    needs:
+      - Build
+    runs-on: ubuntu-latest
+    steps:
+      - # It is often a desired behavior to merge only when a workflow execution
+        # succeeds. This can be changed as needed.
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        name: Merge With main On Success
+        uses: ridedott/merge-me-action@v2
+        with:
+          # Depending on branch protection rules, a  manually populated
+          # `GITHUB_TOKEN_WORKAROUND` secret with permissions to push to
+          # a protected branch must be used. This secret can have an arbitrary
+          # name, as an example, you can use `SOME_RANDOM_TOKEN_STRING`.
+          # Since this repository has no protected branches we will omit
+          # this part of the step.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Single deploy job since we're just deploying
+  deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs:
+      - Build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Project Contents
+        run: |
+          ls -liaR
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          # Optional, workflow file name or ID
+          # If not specified, will be inferred from run_id (if run_id is specified), or will be the current workflow
+          workflow: gradle_build.yml
+          # Optional, the status or conclusion of a completed workflow to search for
+          # Can be one of a workflow conclusion:
+          #   "failure", "success", "neutral", "cancelled", "skipped", "timed_out", "action_required"
+          # Or a workflow status:
+          #   "completed", "in_progress", "queued"
+          #          # Use the empty string ("") to ignore status or conclusion in the search
+          #          workflow_conclusion: success
+          #          # Optional, will get head commit SHA
+          #          pr: ${{github.event.pull_request.number}}
+          #          # Optional, no need to specify if PR is
+          #          commit: ${{github.event.pull_request.head.sha}}
+          # Optional, will use the specified branch. Defaults to all branches
+          branch: main
+          #          # Optional, defaults to all types
+          #          event: push
+          #          # Optional, will use specified workflow run
+          #          run_id: 1122334455
+          #          # Optional, run number from the workflow
+          #          run_number: 34
+          # Optional, uploaded artifact name,
+          # will download all artifacts if not specified
+          # and extract them into respective subdirectories
+          # https://github.com/actions/download-artifact#download-all-artifacts
+          name: csci4320-test-results
+          # Optional, a directory where to extract artifact(s), defaults to the current directory
+          path: '.'
+          #          # Optional, defaults to current repo
+          #          repo: ${{ github.repository }}
+          #          # Optional, check the workflow run to whether it has an artifact
+          #          # then will get the last available artifact from the previous workflow
+          #          # default false, just try to download from the last one
+          #          check_artifacts: false
+          #          # Optional, search for the last workflow run whose stored an artifact named as in `name` input
+          #          # default false
+          #          search_artifacts: false
+          #          # Optional, choose to skip unpacking the downloaded artifact(s)
+          #          # default false
+          #          skip_unpack: false
+          #          # Optional, choose how to exit the action if no artifact is found
+          #          # can be one of:
+          #          #  "fail", "warn", "ignore"
+          #          # default fail
+          #          if_no_artifact_found: fail
+          # Optional, GitHub token, a Personal Access Token with `public_repo` scope if needed
+          # Required, if the artifact is from a different repo
+          # Required, if the repo is private a Personal Access Token with `repo` scope is needed
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload entire repository
+          path: './test'
+          # Depending on branch protection rules, a  manually populated
+          # `GITHUB_TOKEN_WORKAROUND` secret with permissions to push to
+          # a protected branch must be used. This secret can have an arbitrary
+          # name, as an example, you can use `SOME_RANDOM_TOKEN_STRING`.
+          # Since this repository has no protected branches we will omit
+          # this part of the step.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
