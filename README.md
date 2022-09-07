@@ -8,13 +8,13 @@
 
 <div>
     <div>
-        <a href="https://dellius-alexander.github.io/Algorithms/BreadthFirstSearch">BreadthFirstSearch Test Results</a>
+        <a href="https://dellius-alexander.github.io/Algorithms/BreadthFirstSearch/test">BreadthFirstSearch Test Results</a>
     </div>
     <div>
-        <a href="https://dellius-alexander.github.io/Algorithms/Dijkstra">Dijkstra Test Results</a>
+        <a href="https://dellius-alexander.github.io/Algorithms/Dijkstra/test">Dijkstra Test Results</a>
     </div>
     <div>
-        <a href="https://dellius-alexander.github.io/Algorithms/Node">Node Test Results</a>
+        <a href="https://dellius-alexander.github.io/Algorithms/Node/test">Node Test Results</a>
     </div>
 </div>
 
