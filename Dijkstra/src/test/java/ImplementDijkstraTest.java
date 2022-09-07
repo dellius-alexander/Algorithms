@@ -1,14 +1,11 @@
 import Dijkstra.Dijkstra;
+
 import Node.*;
 import Graph.*;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class ImplementDijkstraTest {
@@ -90,15 +87,11 @@ public class ImplementDijkstraTest {
                             nodeL);
 
             nodeA.setShortestPath( results );
-            Long results0EndTime = System.currentTimeMillis() - startTime;
-            log.info("\nRecursive Shortest Path 0:" );
+            log.info("\nRecursive Shortest Path 0:\n" );
             results.forEach(
-                            n -> n.getShortestPath()
-                                    .forEach(
-                                            node -> System.out.printf("\n%s\n",
-                                                    node.toString())
-                                    )
+                    node -> System.out.printf("\n%s", node.toString())
                     );
+            Long results0EndTime = System.currentTimeMillis() - startTime;
             log.info(" \nRuntime: {}\n", results0EndTime);
             boolean found = nodeL.equals(nodeA.getShortestPath().get(0));
             log.info("\nTest Passed: {}",found);
