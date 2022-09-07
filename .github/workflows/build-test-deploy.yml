@@ -95,7 +95,7 @@ jobs:
           cp -R BreadthFirstSearch/build/reports/tests/test test/BreadthFirstSearch
           cp -R Dijkstra/build/reports/tests/test test/BreadthFirstSearch
           cp -R Node/build/reports/tests/test test/BreadthFirstSearch
-          cp -R index.html test
+          cp index.html test
 
       - name: Preparing build and test artifacts on Windows OS
         if: ${{ matrix.os == 'windows-latest' }}
@@ -112,7 +112,6 @@ jobs:
           Copy-Item -Path ".\Dijkstra\build\reports\tests\test" -Destination ".\tests\Dijkstra" -Recurse
           Copy-Item -Path ".\Node\build\reports\tests\test" -Destination ".\tests\Node" -Recurse
           Copy-Item -Path ".\index.html" -Destination ".\tests" 
-          
 
       - name: Setup a cache for Gradle
         uses: actions/cache@v2
@@ -123,17 +122,18 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
       - name: Persist build artifacts
         uses: actions/upload-artifact@v2
         with:
           name: algorithms-artifact
           path: staging
 
-        - name: Persist Test Results
-          uses: actions/upload-artifact@v2
-          with:
-            name: algorithms-test-results
-            path: tests
+      - name: Persist Test Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: algorithms-test-results
+          path: tests
 
   # Single deploy job since we're just deploying
   deploy:
