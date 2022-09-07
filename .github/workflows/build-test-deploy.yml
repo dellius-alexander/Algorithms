@@ -63,6 +63,9 @@ jobs:
         with:
           gradle-version: 7.1
           arguments: |
+            :BreadthFirstSearch:build
+            :Dijkstra:build
+            :Node:build
             build
             test
             --dry-run
@@ -72,8 +75,12 @@ jobs:
         with:
           gradle-version: 7.1
           arguments: |
+            :BreadthFirstSearch:build
+            :Dijkstra:build
+            :Node:build
             build
             test
+            
 
       - name: Verify Repository Contents Post-Build on Linux OS and MacOS
         if: ${{ matrix.os  != 'windows-latest' }}
