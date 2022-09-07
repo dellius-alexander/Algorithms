@@ -39,9 +39,9 @@
 
 <ol id="algorithm-list">
     <li>
-        <a href="https://github.com/dellius-alexander/Algorithms/Dijkstra" id="dijkstra">Dijkstra Algorithm</a>
+        <a href="https://github.com/dellius-alexander/Algorithms/tree/main/Dijkstra" id="dijkstra">Dijkstra Algorithm</a>
     </li>
     <li>
-        <a href="https://github.com/dellius-alexander/Algorithms/BreadthFirstSearch" id="breadthFirstSearch">BreadthFirstSearch Algorithm</a>
+        <a href="https://github.com/dellius-alexander/Algorithms/tree/main/BreadthFirstSearch" id="breadthFirstSearch">BreadthFirstSearch Algorithm</a>
     </li>
 </ol>
