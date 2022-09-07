@@ -90,12 +90,15 @@ jobs:
       - name: Preparing build and test artifacts on Linux OS and MacOS
         if: ${{ matrix.os  != 'windows-latest' }}
         run: |
-          mkdir -p staging  tests/BreadthFirstSearch tests/Dijkstra tests/Node
-          cp BreadthFirstSearch/build/libs/*.jar Dijkstra/build/libs/*.jar  Node/build/libs/*.jar staging
-          cp -R BreadthFirstSearch/build/reports/tests/test test/BreadthFirstSearch
-          cp -R Dijkstra/build/reports/tests/test test/BreadthFirstSearch
-          cp -R Node/build/reports/tests/test test/BreadthFirstSearch
-          cp index.html test
+          mkdir -p ./staging  
+          mkdir -p ./tests/BreadthFirstSearch 
+          mkdir -p ./tests/Dijkstra 
+          mkdir -p ./tests/Node
+          cp BreadthFirstSearch/build/libs/*.jar Dijkstra/build/libs/*.jar  Node/build/libs/*.jar ./staging
+          cp -R ./BreadthFirstSearch/build/reports/tests/test ./tests/BreadthFirstSearch
+          cp -R ./Dijkstra/build/reports/tests/test ./test/Dijkstra
+          cp -R ./Node/build/reports/tests/test ./test/Node
+          cp index.html ./test
 
       - name: Preparing build and test artifacts on Windows OS
         if: ${{ matrix.os == 'windows-latest' }}
