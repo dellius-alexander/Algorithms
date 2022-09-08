@@ -24,7 +24,6 @@ configurations {
 compileJava {
     options.compilerArgs.addAll(['-Xlint:unchecked'])
     options.deprecation = true
-
 }
 
 repositories {

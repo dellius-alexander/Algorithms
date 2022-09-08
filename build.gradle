@@ -27,7 +27,6 @@ compileJava {
     options.deprecation = true
 }
 
-
 dependencies {
     implementation('org.example:Node:1.0')
     implementation('org.example:Dijkstra:1.0')
