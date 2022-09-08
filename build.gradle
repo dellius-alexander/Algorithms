@@ -48,9 +48,16 @@ dependencies {
 
 }
 
-test {
-    useTestNG()
+subprojects {
+    build 'org.example:Node:1.0'
+    build 'org.example:Dijkstra:1.0'
+    build 'org.example:BreadthFirstSearch:1.0'
+    test {
+        useTestNG()
+    }
 }
+
+
 
 
 

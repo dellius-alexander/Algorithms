@@ -1,7 +1,11 @@
+# exclude directory
 /**/logs/
 /**/build/
 /**/.gradle/
-/**/gradle/
-/**/.idea
+/**/.idea/
+
+# exclude files
 /**/.DS_Store
 /**/*.hprof
+/**/*.log
+/**/gradle.properties

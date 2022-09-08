@@ -65,10 +65,6 @@ subprojects {
     build 'org.example:Node:1.0'
 }
 
-task cleanBuildPublish(type: GradleBuild, dependsOn: ['org.example:Node:1.0']) {
-    tasks = ['clean', 'build', 'publish']
-}
-
 test {
     useTestNG()
 }

@@ -1,6 +1,5 @@
 package BreadthFirstSearch;
 
-
 import Graph.Graph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
