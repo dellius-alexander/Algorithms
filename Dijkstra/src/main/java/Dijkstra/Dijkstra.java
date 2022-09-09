@@ -1,11 +1,3 @@
-package Dijkstra;
-
-import Graph.Graph;
-import Node.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.*;
-
 /////////////////////////////////////////////////////////////////////
 /**
  * This program is free software: you can redistribute it and/or modify
@@ -27,6 +19,14 @@ import java.util.*;
  * This is free software, and you are welcome to redistribute it
  * under certain conditions; type `show c' for details.
  */
+/////////////////////////////////////////////////////////////////////
+package Dijkstra;
+/////////////////////////////////////////////////////////////////////
+import Graph.Graph;
+import Node.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.*;
 /////////////////////////////////////////////////////////////////////
 /**
  * <pre>

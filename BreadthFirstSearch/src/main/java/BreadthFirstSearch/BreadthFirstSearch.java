@@ -1,11 +1,3 @@
-package BreadthFirstSearch;
-
-import Graph.Graph;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.ArrayDeque;
-import java.util.Queue;
-import Node.*;
 /////////////////////////////////////////////////////////////////////
 /**
  * This program is free software: you can redistribute it and/or modify
@@ -28,7 +20,15 @@ import Node.*;
  * under certain conditions; type `show c' for details.
  */
 /////////////////////////////////////////////////////////////////////
-
+package BreadthFirstSearch;
+/////////////////////////////////////////////////////////////////////
+import Graph.Graph;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.ArrayDeque;
+import java.util.Queue;
+import Node.*;
+/////////////////////////////////////////////////////////////////////
 /**
  * When all actions have the same cost, an appropriate
  * strategy is breadth-first search, in which the root node is expanded

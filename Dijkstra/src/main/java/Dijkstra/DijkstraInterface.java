@@ -1,10 +1,3 @@
-package Dijkstra;
-
-import Graph.*;
-import Node.*;
-import java.io.Serializable;
-import java.util.List;
-
 /////////////////////////////////////////////////////////////////////
 /**
  * This program is free software: you can redistribute it and/or modify
@@ -26,6 +19,12 @@ import java.util.List;
  * This is free software, and you are welcome to redistribute it
  * under certain conditions; type `show c' for details.
  */
+package Dijkstra;
+/////////////////////////////////////////////////////////////////////
+import Graph.*;
+import Node.*;
+import java.io.Serializable;
+import java.util.List;
 /////////////////////////////////////////////////////////////////////
 /**
  * The Dijkstra Interface allows for customizable initialization and cost

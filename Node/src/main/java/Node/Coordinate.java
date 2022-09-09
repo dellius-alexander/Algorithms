@@ -1,7 +1,3 @@
-package Node;
-
-import java.io.Serializable;
-import java.util.Objects;
 /////////////////////////////////////////////////////////////////////
 /**
  * This program is free software: you can redistribute it and/or modify
@@ -23,6 +19,11 @@ import java.util.Objects;
  * This is free software, and you are welcome to redistribute it
  * under certain conditions; type `show c' for details.
  */
+/////////////////////////////////////////////////////////////////////
+package Node;
+/////////////////////////////////////////////////////////////////////
+import java.io.Serializable;
+import java.util.Objects;
 /////////////////////////////////////////////////////////////////////
 /**
  * Represents the node coordinates.

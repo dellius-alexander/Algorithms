@@ -1,10 +1,3 @@
-package Node;
-
-import lombok.NonNull;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 /////////////////////////////////////////////////////////////////////
 /**
  * This program is free software: you can redistribute it and/or modify
@@ -26,6 +19,13 @@ import java.util.stream.Collectors;
  * This is free software, and you are welcome to redistribute it
  * under certain conditions; type `show c' for details.
  */
+/////////////////////////////////////////////////////////////////////
+package Node;
+/////////////////////////////////////////////////////////////////////
+import lombok.NonNull;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 /////////////////////////////////////////////////////////////////////
 /**
  * <pre>
