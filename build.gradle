@@ -49,20 +49,11 @@ dependencies {
 }
 
 subprojects {
-    build 'org.example:Node:1.0'
-    build 'org.example:Dijkstra:1.0'
-    build 'org.example:BreadthFirstSearch:1.0'
     test {
-        useTestNG()
+        // Indicate that testing tasks should run after the "checkstyleAll" task
+        shouldRunAfter(build)
     }
+
 }
-
-
-
-
-
-
-
-
 
 
