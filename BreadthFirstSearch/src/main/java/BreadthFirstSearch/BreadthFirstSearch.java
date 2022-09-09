@@ -6,7 +6,39 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import Node.*;
+/////////////////////////////////////////////////////////////////////
+/**
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * Algorithms  Copyright (C) 2022  Dellius Alexander
+ *
+ * This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+ * This is free software, and you are welcome to redistribute it
+ * under certain conditions; type `show c' for details.
+ */
+/////////////////////////////////////////////////////////////////////
 
+/**
+ * When all actions have the same cost, an appropriate
+ * strategy is breadth-first search, in which the root node is expanded
+ * first, then all the successors of the root node are expanded next,
+ * then their successors, and so on. This is a systematic search strategy
+ * that is therefore complete even on infinite state spaces. We could
+ * implement breadth-first search as a call to BEST-FIRST-SEARCH where
+ * the evaluation function is the depth of the node—that is, the number
+ * of actions it takes to reach the node.
+ */
 public class BreadthFirstSearch {
     private final static Logger log = LoggerFactory.getLogger(BreadthFirstSearch.class);
 
