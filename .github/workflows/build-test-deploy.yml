@@ -200,12 +200,14 @@ jobs:
       - name: Project Contents
         run: |
           ls -liaR 
+          mkdir algorithms-1.0
+          tar -xvf algorithms-1.0-tar -C algorithms-1.0
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: 'algorithms-1.0.tar'
+          path: 'algorithms-1.0'
           # Depending on branch protection rules, a  manually populated
           # `GITHUB_TOKEN_WORKAROUND` secret with permissions to push to
           # a protected branch must be used. This secret can have an arbitrary
