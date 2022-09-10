@@ -8,21 +8,20 @@
 
 <div>
     <div>
-        <a href="https://dellius-alexander.github.io/Algorithms/BreadthFirstSearch/test">BreadthFirstSearch Test Results</a>
+        <li><a href="https://dellius-alexander.github.io/Algorithms/BreadthFirstSearch/build/reports/tests/test">BreadthFirstSearch Test Results</a></li>
     </div>
     <div>
-        <a href="https://dellius-alexander.github.io/Algorithms/Dijkstra/test">Dijkstra Test Results</a>
+        <li><a href="https://dellius-alexander.github.io/Algorithms/Dijkstra/build/reports/tests/test">Dijkstra Test Results</a></li>
     </div>
     <div>
-        <a href="https://dellius-alexander.github.io/Algorithms/Node/test">Node Test Results</a>
+        <li><a href="https://dellius-alexander.github.io/Algorithms/Node/build/reports/tests/test">Node Test Results</a></li>
     </div>
+    </div>
+        <li><a href="https://dellius-alexander.github.io/Algorithms">Official Project Page</a></li>
+    <div>
 </div>
-
-
 <hr/>
-
 <h1> <a href="#algorithms" id="algorithms">Algorithms</a></h1>
-
 <hr/>
 <pre>
     An algorithm is a procedure to accomplish a specific task.
