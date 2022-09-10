@@ -48,12 +48,76 @@ dependencies {
 
 }
 
-subprojects {
-    test {
-        // Indicate that testing tasks should run after the "checkstyleAll" task
-        shouldRunAfter(build)
-    }
 
+
+task tar(type: Tar ) {
+    from ('../Algorithms') {
+        include "BreadthFirstSearch/build/classes/java/**"
+        include "BreadthFirstSearch/build/docs/**"
+        include "BreadthFirstSearch/build/reports/**"
+        include "BreadthFirstSearch/build/libs/**"
+    }
+    from ('../Algorithms') {
+        include "Dijkstra/build/classes/java/**"
+        include "Dijkstra/build/docs/**"
+        include "Dijkstra/build/reports/**"
+        include "Dijkstra/build/libs/**"
+
+    }
+    from ('../Algorithms') {
+        include "Node/build/classes/java/**"
+        include "Node/build/docs/**"
+        include "Node/build/reports/**"
+        include "Node/build/libs/**"
+
+    }
+    from ('../Algorithms') {
+        include "index.html"
+    }
+    destinationDir(file("distro"))
+    baseName  "algorithms"
 }
+
+task zip(type: Zip ) {
+    from ('../Algorithms') {
+        include "BreadthFirstSearch/build/classes/java/**"
+        include "BreadthFirstSearch/build/docs/**"
+        include "BreadthFirstSearch/build/reports/**"
+        include "BreadthFirstSearch/build/libs/**"
+    }
+    from ('../Algorithms') {
+        include "Dijkstra/build/classes/java/**"
+        include "Dijkstra/build/docs/**"
+        include "Dijkstra/build/reports/**"
+        include "Dijkstra/build/libs/**"
+
+    }
+    from ('../Algorithms') {
+        include "Node/build/classes/java/**"
+        include "Node/build/docs/**"
+        include "Node/build/reports/**"
+        include "Node/build/libs/**"
+
+    }
+    from ('../Algorithms') {
+        include "index.html"
+    }
+    destinationDir(file("distro"))
+    baseName  "algorithms"
+}
+
+subprojects {
+    build
+    test.mustRunAfter build
+}
+
+test{
+    useTestNG()
+}
+build.dependsOn tar
+build.dependsOn zip
+tar.dependsOn subprojects
+
+
 
 

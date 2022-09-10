@@ -1,6 +1,10 @@
+import java.security.MessageDigest
+import java.time.format.DateTimeFormatter
+
 plugins {
     id 'java-library'
 }
+
 description = '''A representation of a node object in a connected graph.'''
 
 group = 'org.example'
@@ -18,11 +22,15 @@ compileJava {
     options.deprecation = true
 }
 
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
+
+    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.15'
 
     // https://mvnrepository.com/artifact/org.json/json
     implementation group: 'org.json', name: 'json', version: '20220320'
@@ -45,10 +53,18 @@ dependencies {
     testImplementation group: 'org.testng', name: 'testng', version: '7.6.0'
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testImplementation 'org.projectlombok:lombok:1.18.24'
     testCompileOnly 'org.projectlombok:lombok:1.18.24'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+javadoc {
+    source = sourceSets.main.java
 }
 
 test {
     useTestNG()
 }
+
+build.dependsOn javadoc
+test.dependsOn javadoc

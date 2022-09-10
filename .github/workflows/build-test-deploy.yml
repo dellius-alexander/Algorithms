@@ -95,26 +95,14 @@ jobs:
           mkdir staging  
           mkdir -p tests/BreadthFirstSearch  tests/Dijkstra  tests/Node
           cp BreadthFirstSearch/build/libs/*.jar Dijkstra/build/libs/*.jar  Node/build/libs/*.jar ./staging
-          cp -R ./BreadthFirstSearch/build/reports/tests/test ./tests/BreadthFirstSearch
-          cp -R ./Dijkstra/build/reports/tests/test ./tests/Dijkstra
-          cp -R ./Node/build/reports/tests/test ./tests/Node
-          cp index.html ./tests
 
       - name: Preparing build and test artifacts on Windows OS
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
           New-Item -Path '.'  -Name 'staging'  -ItemType 'Directory' 
-          New-Item -Path '.'  -Name 'tests'  -ItemType 'Directory'
-          New-Item -Path '.'  -Name 'tests\BreadthFirstSearch'  -ItemType 'Directory' 
-          New-Item -Path '.'  -Name 'tests\Dijkstra'  -ItemType 'Directory' 
-          New-Item -Path '.'  -Name 'tests\Node'  -ItemType 'Directory'
           Copy-Item -Path ".\BreadthFirstSearch\build\libs\*.jar" -Destination ".\staging" -Recurse
           Copy-Item -Path ".\Dijkstra\build\libs\*.jar" -Destination ".\staging" -Recurse
           Copy-Item -Path ".\Node\build\libs\*.jar" -Destination ".\staging" -Recurse
-          Copy-Item -Path ".\BreadthFirstSearch\build\reports\tests\test" -Destination ".\tests\BreadthFirstSearch" -Recurse
-          Copy-Item -Path ".\Dijkstra\build\reports\tests\test" -Destination ".\tests\Dijkstra" -Recurse
-          Copy-Item -Path ".\Node\build\reports\tests\test" -Destination ".\tests\Node" -Recurse
-          Copy-Item -Path ".\index.html" -Destination ".\tests" 
 
       - name: Setup a cache for Gradle
         uses: actions/cache@v2
@@ -135,8 +123,8 @@ jobs:
       - name: Persist Test Results
         uses: actions/upload-artifact@v2
         with:
-          name: algorithms-test-results
-          path: tests
+          name: algorithms-assets
+          path: distro/algorithms-1.0.tar
 
   # Single deploy job since we're just deploying
   deploy:
@@ -154,7 +142,6 @@ jobs:
       - name: Project Contents
         run: |
           ls -liaR
-          mkdir tests
 
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.0
@@ -185,9 +172,9 @@ jobs:
           # will download all artifacts if not specified
           # and extract them into respective subdirectories
           # https://github.com/actions/download-artifact#download-all-artifacts
-          name: algorithms-test-results
+          name: algorithms-assets
           # Optional, a directory where to extract artifact(s), defaults to the current directory
-          path: './tests'
+          path: '.'
           #          # Optional, defaults to current repo
           #          repo: ${{ github.repository }}
           #          # Optional, check the workflow run to whether it has an artifact
@@ -218,7 +205,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: './tests'
+          path: 'algorithms-1.0.tar'
           # Depending on branch protection rules, a  manually populated
           # `GITHUB_TOKEN_WORKAROUND` secret with permissions to push to
           # a protected branch must be used. This secret can have an arbitrary

@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
 }
 
+
 description = '''Dijkstra algorithm used to find shortest path in a connected graph'''
 
 group = 'org.example'
@@ -17,6 +18,7 @@ compileJava {
     options.compilerArgs.addAll(['-Xlint:unchecked'])
     options.deprecation = true
 }
+
 
 repositories {
     mavenCentral()
@@ -55,18 +57,13 @@ dependencies {
 
 }
 
-subprojects {
-    build 'org.example:Node:1.0'
-}
-
-task cleanBuildPublish(type: GradleBuild, dependsOn: ['org.example:Node:1.0']) {
-    tasks = ['clean', 'build', 'publish']
+javadoc {
+    source = sourceSets.main.java
 }
 
 test {
     useTestNG()
 }
 
-
-
-
+build.dependsOn javadoc
+test.dependsOn javadoc

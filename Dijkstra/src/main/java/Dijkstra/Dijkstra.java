@@ -1,4 +1,3 @@
-/////////////////////////////////////////////////////////////////////
 /**
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,11 +41,12 @@ import java.util.*;
  *
  * When the algorithm has finished running, it produces a list that
  * holds the following information for each node:
- *  <ol>
- *      <li>The node label</li>
- *      <li>The cost of the shortest path to that node (from the start node)</li>
- *      <li>The label of the previous node in the path</li>
- *  </ol>
+ *
+ * - The node label
+ * - The cost of the shortest path to that node (from the start node)
+ * - The label of the previous node in the path
+ *
+ *
  * Using the information in this list you can backtrack through the
  * previous nodes back to the start node. This will give you the
  * shortest path (sequence of visited nodes) from the start node to
@@ -89,7 +89,7 @@ public class Dijkstra extends DijkstraAbstract<Object,Object,Object> {
     /**
      * Find the node edge with the lowest cost.
      * @param nodes the list of node.
-     * @return the node {@link Edge}<{@link Distance ,Node}>with the lowest
+     * @return the node {@link Edge} with the lowest
      *          weight/cost edge.
      * @see Distance
      * @see Node

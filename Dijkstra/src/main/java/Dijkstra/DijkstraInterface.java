@@ -1,4 +1,3 @@
-/////////////////////////////////////////////////////////////////////
 /**
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,21 +36,21 @@ import java.util.List;
 public interface DijkstraInterface<Id,Data,Metric> extends Serializable {
 
     /**
-     * <h2>Procedure Algorithm Dijkstra’s Algorithm</h2>
-     * <hr/>
+     * Procedure Algorithm Dijkstra’s Algorithm
+     * <hr>
      * Recursive implementation of Dijkstra Algorithm.
      * Calculates the shortest path from the start node to
      * destination node from a graph/digraph of size n.
-     * <hr/>
+     * <hr>
      * <h3>
      * <strong>Dijkstra( G, d, a, z ):= [a...z]</strong> {shortest path from a to z}
      * </h3>
      * <pre>
      * {<strong>Below:</strong> G has vertices/edges from a to z,
-     * a => v<sub>0</sub>,v<sub>1</sub>,...,v<sub>n</sub> => z
-     * and lengths w(v<sub>i</sub>, v<sub>j</sub>)
-     * where w(v<sub>i</sub>, v<sub>j</sub>) = +Infinity
-     * if {v<sub>i</sub>, v<sub>j</sub>} is not an edge in G}
+     * a := v_0,v_1,...,v_n := z
+     * and lengths w(v_i, v_j)
+     * where w(v_i, v_j) = +Infinity
+     * if {v_i, v_j} is not an edge in G}
      *
      * Dijkstra(
      *     G := digraph,
@@ -69,8 +68,8 @@ public interface DijkstraInterface<Id,Data,Metric> extends Serializable {
      * of +Infinity to omit this step}
      *
      * if (d == 0) {initial function call should initialize d := 0}
-     *     for v<sub>i</sub> in n;
-     *        v<sub>i</sub> := +Infinity;   {initialize all nodes to +Infinity}
+     *     for v_i in n;
+     *        v_i := +Infinity;   {initialize all nodes to +Infinity}
      *     a := 0;     {initialize the start node distance/weight to 0}
      *
      * L(a) := 0;  {add start node to list unsettled nodes}
@@ -136,7 +135,7 @@ public interface DijkstraInterface<Id,Data,Metric> extends Serializable {
     /**
      * Find the node edge with the lowest cost.
      * @param nodes the list of node.
-     * @return the node {@link Edge}<{@link Distance ,Node}>with the lowest
+     * @return the node {@link Edge} with the lowest
      *          weight/cost edge.
      * @see Distance
      * @see Node

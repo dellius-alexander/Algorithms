@@ -61,13 +61,13 @@ dependencies {
 
 }
 
-subprojects {
-    build 'org.example:Node:1.0'
+javadoc {
+    source = sourceSets.main.java
 }
 
 test {
     useTestNG()
 }
 
-
-
+build.dependsOn javadoc
+test.dependsOn javadoc

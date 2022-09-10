@@ -1,4 +1,3 @@
-/////////////////////////////////////////////////////////////////////
 /**
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,15 +19,14 @@
  * under certain conditions; type `show c' for details.
  */
 /////////////////////////////////////////////////////////////////////
-
 /**
  * Node module
  */
 module Node {
+    exports Node;
+    exports Graph;
     requires lombok;
     requires java.desktop;
     requires org.slf4j;
-//    requires Dijkstra;
-    exports Node;
-    exports Graph;
+
 }
