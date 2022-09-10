@@ -52,21 +52,21 @@ public class BreadthFirstSearch {
      *
      * BFS(G, s)
      *      for each vertex u∈V[G]−{s} do
-     *          state[u] = “undiscovered”
-     *          p[u] = nil, i.e. no parent is in the BFS tree
-     *      state[s] = “discovered”
-     *      p[s] = nil
-     *      Q = {s}
+     *          state[u] := undiscovered
+     *          p[u] := nil, i.e. no parent is in the BFS tree
+     *      state[s] := discovered
+     *      p[s] := nil
+     *      Q := {s}
      *      while Q ̸= ∅ do
-     *          u = dequeue[Q]
+     *          u := dequeue[Q]
      *          process vertex u as desired
      *          for each v ∈ Adj[u] do
      *              process edge (u,v) as desired
-     *              if state[v] = “undiscovered” then
-     *                  state[v] = “discovered”
-     *                  p[v] = u    {parent node = child node}
+     *              if state[v] := undiscovered then
+     *                  state[v] := discovered
+     *                  p[v] := u    {parent node := child node}
      *                  enqueue[Q, v]
-     *          state[u] = “processed”
+     *          state[u] := processed
      *
      *
      * @param graph the graph or digraph
