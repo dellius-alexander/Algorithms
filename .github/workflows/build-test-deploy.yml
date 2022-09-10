@@ -200,8 +200,8 @@ jobs:
       - name: Project Contents
         run: |
           ls -liaR 
-          mkdir algorithms-1.0
-          tar -xvf algorithms-1.0-tar -C algorithms-1.0
+          mkdir "algorithms-1.0"
+          tar -xvf "algorithms-1.0-tar" -C "algorithms-1.0"
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
