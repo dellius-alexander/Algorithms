@@ -57,16 +57,20 @@ under certain conditions; type `show c' for details.
 
     <style>
         body{
-            padding-top: 100px;
+            padding-top: 15px;
             margin-bottom: 100px;
+            background-color: #303030;
         }
         .container{
-            margin: auto;
+            margin: 20px auto;
             left: 0;
             right: 0;
             max-width: 50%;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 15px;
         }
-        .links{
+        .links > a{
             margin-top: 10px;
             margin-bottom: 10px;
             padding-top: 10px;
@@ -84,27 +88,38 @@ under certain conditions; type `show c' for details.
         .link-ctr{
             margin: auto 0;
             max-width: fit-content;
+        }
 
-        }
-        .icon-image{
-            transform: scale(2);
-            margin-left: 100px;
-        }
         p, #algorithm-list, .links > a{
             font-size: 1.75rem;
+        }
+        h3{
+            background-color: #2f54a7;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            color: #ffffff;
+        }
+        @media only screen and (max-width: 768px){
+            * {
+                transform: scale(1);
+            }
+            .container{
+                max-width: 100%;
+            }
         }
     </style>
 
 </head>
 <body>
     <div class="container" >
-        <div class="links">
+        <div class="build-banner-icon">
             <a href="https://github.com/dellius-alexander/Algorithms/actions/workflows/build-test-deploy.yml">
                 <img alt="Build results" class="icon-image" src="https://github.com/dellius-alexander/Algorithms/actions/workflows/build-test-deploy.yml/badge.svg?branch=main&event=pull_request&event=push">
             </a>
         </div>
         <hr/>
-        <h3>Documentation:</h3>
+        <h3>Documentation</h3>
         <div class="link-ctr">
             <div class="links">
                 <a class="btn btn-info BreadthFirstSearch" href="https://dellius-alexander.github.io/Algorithms/BreadthFirstSearch/build/docs/javadoc">BreadthFirstSearch Documentation</a>
@@ -117,7 +132,7 @@ under certain conditions; type `show c' for details.
             </div>
         </div>
         <hr/>
-        <h3>Test Results:</h3>
+        <h3>Test Results</h3>
         <div class="link-ctr">
             <div class="links">
                 <a class="btn btn-success BreadthFirstSearch" href="https://dellius-alexander.github.io/Algorithms/BreadthFirstSearch/build/reports/tests/test">BreadthFirstSearch Test Results</a>
@@ -130,7 +145,7 @@ under certain conditions; type `show c' for details.
             </div>
         </div>
         <hr/>
-        <h3>Algorithms:</h3>
+        <h3>Algorithms</h3>
         <hr/>
         <p>
             An algorithm is a procedure to accomplish a specific task.
