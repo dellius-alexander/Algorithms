@@ -49,7 +49,7 @@ public class BreadthFirstSearch {
      * from the discoverer u to the discovered v. We thus denote u to be the parent of
      * v. Since each node has exactly one parent, except for the root, this defines a
      * tree on the vertices of the graph.
-     * <pre>
+     *
      * BFS(G, s)
      *      for each vertex u∈V[G]−{s} do
      *          state[u] = “undiscovered”
@@ -67,7 +67,7 @@ public class BreadthFirstSearch {
      *                  p[v] = u    {parent node = child node}
      *                  enqueue[Q, v]
      *          state[u] = “processed”
-     * </pre>
+     *
      *
      * @param graph the graph or digraph
      * @param distance the distance of the node from origin/start node
