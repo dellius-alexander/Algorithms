@@ -1,13 +1,10 @@
-import java.security.MessageDigest
-import java.time.format.DateTimeFormatter
-
 plugins {
     id 'java-library'
+    id 'application'
 }
 
 description = '''A representation of a node object in a connected graph.'''
-
-group = 'org.example'
+group = 'com.example'
 version = '1.0'
 
 configurations {
@@ -20,11 +17,6 @@ configurations {
 compileJava {
     options.compilerArgs.addAll(['-Xlint:unchecked'])
     options.deprecation = true
-}
-
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {

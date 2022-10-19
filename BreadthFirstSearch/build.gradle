@@ -1,5 +1,6 @@
 plugins {
     id 'java-library'
+    id 'application'
 }
 
 description = '''When all actions have the same cost, an appropriate 
@@ -26,14 +27,10 @@ compileJava {
     options.deprecation = true
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
 
     // include local project
-    implementation('org.example:Node:1.0')
+    implementation project(':Node')
 
     // https://mvnrepository.com/artifact/org.json/json
     implementation group: 'org.json', name: 'json', version: '20220320'

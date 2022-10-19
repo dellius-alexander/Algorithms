@@ -1,14 +1,29 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
+// plugins will use these repository settings
 pluginManagement {
     repositories {
-        maven { url 'https://repo.spring.io/milestone' }
-        maven { url 'https://repo.spring.io/snapshot' }
         gradlePluginPortal()
+        mavenCentral()
+        maven { url 'https://repo.spring.io/milestone' }
+        maven { url "https://repo.spring.io/release" }
+    }
+}
+// dependencies will use these repository settings
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/milestone' }
+        maven { url "https://repo.spring.io/release" }
     }
 }
 
 rootProject.name = 'Algorithms'
 
-includeBuild('./Node')
-includeBuild('./Dijkstra')
-includeBuild('./BreadthFirstSearch')
-
+include ":Node"
+project(":Node").projectDir = file("./Node")
+include ":Dijkstra"
+project(":Dijkstra").projectDir = file("./Dijkstra")
+include ":BreadthFirstSearch"
+project(":BreadthFirstSearch").projectDir = file("./BreadthFirstSearch")

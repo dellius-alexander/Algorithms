@@ -13,14 +13,8 @@ a problem and an instance of a problem, is fundamental.
 An algorithm is a procedure that takes any of the possible 
 input instances and transforms it to the desired output.
 '''
-
-group = 'org.example'
+group = 'com.example'
 version = '1.0'
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-}
 
 compileJava {
     options.compilerArgs.addAll(['-Xlint:unchecked'])
@@ -28,21 +22,21 @@ compileJava {
 }
 
 dependencies {
-    implementation('org.example:Node:1.0')
-    implementation('org.example:Dijkstra:1.0')
-    implementation('org.example:BreadthFirstSearch:1.0')
+    compileClasspath project(':Node')
+    compileClasspath project(':Dijkstra')
+    compileClasspath project(':BreadthFirstSearch')
 
-    testCompileOnly('org.example:Node:1.0')
-    testCompileOnly('org.example:Dijkstra:1.0')
-    testCompileOnly('org.example:BreadthFirstSearch:1.0')
+//    testCompileOnly project(':Node')
+//    testCompileOnly project(':Dijkstra')
+//    testCompileOnly project(':BreadthFirstSearch')
 
-    testRuntimeOnly('org.example:Node:1.0')
-    testRuntimeOnly('org.example:Dijkstra:1.0')
-    testRuntimeOnly('org.example:BreadthFirstSearch:1.0')
+//    testRuntimeOnly project(':Node')
+//    testRuntimeOnly project(':Dijkstra')
+//    testRuntimeOnly project(':BreadthFirstSearch')
 
-    testCompileClasspath('org.example:Node:1.0')
-    testCompileClasspath('org.example:Dijkstra:1.0')
-    testCompileClasspath('org.example:BreadthFirstSearch:1.0')
+//    testCompileClasspath project(':Node')
+//    testCompileClasspath project(':Dijkstra')
+//    testCompileClasspath project(':BreadthFirstSearch')
 
     testImplementation group: 'org.testng', name: 'testng', version: '7.6.0'
 
@@ -117,7 +111,5 @@ test{
 build.dependsOn tar
 build.dependsOn zip
 tar.dependsOn subprojects
-
-
 
 
