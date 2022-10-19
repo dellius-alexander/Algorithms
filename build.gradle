@@ -102,7 +102,6 @@ task zip(type: Zip ) {
 
 subprojects {
     build
-    test.mustRunAfter build
 }
 
 test{
@@ -110,6 +109,5 @@ test{
 }
 build.dependsOn tar
 build.dependsOn zip
-tar.dependsOn subprojects
 
 

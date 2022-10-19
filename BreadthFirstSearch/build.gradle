@@ -59,7 +59,8 @@ dependencies {
 }
 
 javadoc {
-    source = sourceSets.main.java
+    source = sourceSets.main.allJava
+    options.addBooleanOption('html5', true)
 }
 
 test {
@@ -67,4 +68,3 @@ test {
 }
 
 build.dependsOn javadoc
-test.dependsOn javadoc

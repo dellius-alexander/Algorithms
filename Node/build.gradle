@@ -59,4 +59,3 @@ test {
 }
 
 build.dependsOn javadoc
-test.dependsOn javadoc
