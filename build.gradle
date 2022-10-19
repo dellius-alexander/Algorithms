@@ -28,7 +28,12 @@ dependencies {
     // Logging dependencies
     implementation 'org.slf4j:slf4j-api:2.0.3'
     implementation 'ch.qos.logback:logback-classic:1.4.4'
-
+    // lombok annotations  dependencies is for boilerplate code generation
+    implementation 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 
     testImplementation group: 'org.testng', name: 'testng', version: '7.6.0'
 
