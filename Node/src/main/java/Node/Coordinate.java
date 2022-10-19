@@ -53,6 +53,15 @@ public class Coordinate<Row,Column> implements Serializable
         this.row = row;
         this.column = column;
     }
+//    /**
+//     * Coordinates of the node
+//     * @param row row
+//     * @param column column
+//     */
+//    public Coordinate(Integer row, Integer column) {
+//        this.row = (Row)row;
+//        this.column = (Column) column;
+//    }
 
     /**
      * get the row

@@ -25,18 +25,10 @@ dependencies {
     compileClasspath project(':Node')
     compileClasspath project(':Dijkstra')
     compileClasspath project(':BreadthFirstSearch')
+    // Logging dependencies
+    implementation 'org.slf4j:slf4j-api:2.0.3'
+    implementation 'ch.qos.logback:logback-classic:1.4.4'
 
-//    testCompileOnly project(':Node')
-//    testCompileOnly project(':Dijkstra')
-//    testCompileOnly project(':BreadthFirstSearch')
-
-//    testRuntimeOnly project(':Node')
-//    testRuntimeOnly project(':Dijkstra')
-//    testRuntimeOnly project(':BreadthFirstSearch')
-
-//    testCompileClasspath project(':Node')
-//    testCompileClasspath project(':Dijkstra')
-//    testCompileClasspath project(':BreadthFirstSearch')
 
     testImplementation group: 'org.testng', name: 'testng', version: '7.6.0'
 

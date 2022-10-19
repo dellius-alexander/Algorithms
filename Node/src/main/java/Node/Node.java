@@ -53,7 +53,7 @@ public class Node<Name, Data, Metric> implements Comparable<Node<Name, Data, Met
     /**
      * The shortest path
      */
-    private List<Node<Name,Data, Metric>> shortestPath;
+    private List<Node<Name, Data, Metric>> shortestPath;
     /**
      * The distance of this node from an adjacent edge
      */
@@ -61,7 +61,7 @@ public class Node<Name, Data, Metric> implements Comparable<Node<Name, Data, Met
     /**
      * List of edges
      */
-    private List<Edge<Distance<Metric>, Node<Name,Data, Metric>>> edges;
+    private List<Edge<Distance<Metric>, Node<Name, Data, Metric>>> edges;
 
     /**
      * A node
