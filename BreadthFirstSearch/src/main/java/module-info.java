@@ -32,8 +32,9 @@
  * node has exactly one parent, except for the root, this defines a tree
  * on the vertices of the graph. This algorithm has a modification
  * terminating at your target or destination node.
- * <strong>BreadthFirstSearch(G, d, s, z) := path from s to z</strong>
+ *
  * <pre>
+ * <strong>BreadthFirstSearch(G, d, s, z) := path from s to z</strong>
  * V(G) := set of vertices in G
  * E(G) := set of edges in G
  *
