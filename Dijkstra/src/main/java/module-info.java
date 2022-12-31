@@ -45,7 +45,7 @@
  *     V.add(u)
  *     for v in G.neighbors(u):
  *       if v not in V:
- *         if v not in D or D[v] &#xFF1E; D[u] + G.distance(u, v):
+ *         if v not in D or D[v] &gt; D[u] + G.distance(u, v):
  *           D[v] = D[u] + G.distance(u, v)
  *   return D
  * </pre>
