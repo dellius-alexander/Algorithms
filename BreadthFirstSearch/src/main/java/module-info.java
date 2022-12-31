@@ -21,10 +21,8 @@
 /////////////////////////////////////////////////////////////////////
 
 /**
- * BreadthFirstSearch
+ * Procedure BreadthFirstSearch’s Algorithm:
  *
- * <h2>Procedure BreadthFirstSearch’s Algorithm</h2>
- * <hr/>
  * In a Breadth-First search algorithm we start at some node and traverse
  * a directed graph ending at some destination node. At some point during
  * the course of a traversal, it explores all the neighbors of a node before
@@ -35,10 +33,7 @@
  * node has exactly one parent, except for the root, this defines a tree
  * on the vertices of the graph. This algorithm has a modification
  * terminating at your target or destination node.
- * <hr/>
- * <h4>
  * <strong>BreadthFirstSearch(G, d, s, z) := path from s to z</strong>
- * </h4>
  * <pre>
  * V(G) := set of vertices in G
  * E(G) := set of edges in G
