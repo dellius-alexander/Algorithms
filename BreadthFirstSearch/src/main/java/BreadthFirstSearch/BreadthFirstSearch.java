@@ -1,43 +1,17 @@
-/**
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- *
- * Algorithms  Copyright (C) 2022  Dellius Alexander
- *
- * This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
- * This is free software, and you are welcome to redistribute it
- * under certain conditions; type `show c' for details.
- */
-/////////////////////////////////////////////////////////////////////
 package BreadthFirstSearch;
-/////////////////////////////////////////////////////////////////////
-import Graph.Graph;
+
+
+//import Dijkstra.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
 import java.util.ArrayDeque;
+import java.util.List;
 import java.util.Queue;
-import Node.*;
-/////////////////////////////////////////////////////////////////////
-/**
- * When all actions have the same cost, an appropriate
- * strategy is breadth-first search, in which the root node is expanded
- * first, then all the successors of the root node are expanded next,
- * then their successors, and so on. This is a systematic search strategy
- * that is therefore complete even on infinite state spaces. We could
- * implement breadth-first search as a call to BEST-FIRST-SEARCH where
- * the evaluation function is the depth of the node—that is, the number
- * of actions it takes to reach the node.
- */
+import java.util.stream.Collectors;
+
+
 public class BreadthFirstSearch {
     private final static Logger log = LoggerFactory.getLogger(BreadthFirstSearch.class);
 
@@ -49,32 +23,30 @@ public class BreadthFirstSearch {
      * from the discoverer u to the discovered v. We thus denote u to be the parent of
      * v. Since each node has exactly one parent, except for the root, this defines a
      * tree on the vertices of the graph.
-     *
+     * <pre>
      * BFS(G, s)
      *      for each vertex u∈V[G]−{s} do
-     *          state[u] := undiscovered
-     *          p[u] := nil, i.e. no parent is in the BFS tree
-     *      state[s] := discovered
-     *      p[s] := nil
-     *      Q := {s}
+     *          state[u] = “undiscovered”
+     *          p[u] = nil, i.e. no parent is in the BFS tree
+     *      state[s] = “discovered”
+     *      p[s] = nil
+     *      Q = {s}
      *      while Q ̸= ∅ do
-     *          u := dequeue[Q]
+     *          u = dequeue[Q]
      *          process vertex u as desired
      *          for each v ∈ Adj[u] do
      *              process edge (u,v) as desired
-     *              if state[v] := undiscovered then
-     *                  state[v] := discovered
-     *                  p[v] := u    {parent node := child node}
-     *                  enqueue[Q, v]
-     *          state[u] := processed
+     *              if state[v] = “undiscovered” then
+     *              state[v] = “discovered” p[v] = u
+     *              enqueue[Q, v]
+     *          state[u] = “processed”
+     * </pre>
      *
-     *
-     * @param graph the graph or digraph
-     * @param distance the distance of the node from origin/start node
-     * @param startNode the start node
-     * @param destinationNode the destination node
-     * @return a list of nodes from start to destination node and all
-     * nodes in path.
+     * @param graph
+     * @param distance
+     * @param startNode
+     * @param destinationNode
+     * @return
      */
     public Queue<Node<String,String,Integer>> breadthFirstSearch(
             Graph<Node<String,String,Integer>> graph,
@@ -95,54 +67,168 @@ public class BreadthFirstSearch {
         {
             // Initialization of all nodes with distance "infinite";
             graph.getNodes().forEach(
-                    node -> node.setDistance(new Distance<>( Integer.MAX_VALUE))
+                    gNode -> {
+                        Distance<Integer> d = new Distance<>( Integer.MAX_VALUE);
+                        gNode.setDistance(d);
+                    }
             );
+
             // initialization of the starting node with 0
             startNode.setDistance(distance);
         }
 
-        // add the start node to unsettled node list aka deQueue
+        // add the start node to unsettled node list
         deQueue.add(
                 new Edge<>(
                         distance,
                         startNode
                 )
         );
-        // while deQueue > 0
-        while (deQueue.size() > 0)
-        {
+        // for each neighbor adjacent node of the minimum distance node, where n has not yet been
+        // removed from unsettled nodes do;
+        while (deQueue.size() != 0) {
             // get the node on with the smallest/minimum distance
-            Edge<Distance<Integer>, Node<String,String,Integer>> parentNodeEdge = deQueue.poll();
-            Distance<Integer> parentNodeWeight = parentNodeEdge.getDistance();
-            Integer previousPathWeight = Integer.MAX_VALUE;
-            Node<String,String,Integer> parentNode = parentNodeEdge.getNode();
+            Edge<Distance<Integer>, Node<String,String,Integer>> parentEdge = deQueue.poll();
+
+            Node<String,String,Integer> parent = parentEdge.getNode();
+            Distance<Integer> edgeWeightParent = parentEdge.getDistance();
+
             // for each neighbor adjacent node of the minimum distance node, where n has not yet been
             // removed from unsettled nodes do;
-            for (Edge<Distance<Integer>, Node<String,String,Integer>> childNodeEdge : parentNodeEdge.getNode().getEdges())
+            for (Edge<Distance<Integer>, Node<String,String,Integer>> childEdge : parentEdge.getNode().getEdges())
             {
-
-                Node<String,String,Integer> childNode = childNodeEdge.getNode();
-                Distance<Integer> childNodeWeight = childNodeEdge.getDistance();
-                Integer pathWeight = parentNodeWeight.getValue() + childNodeWeight.getValue();
-
-                log.info("\nParent Edge: {}\nChild Edge: {}\n",parentNodeEdge,childNodeEdge);
-                if (childNode.getDistance().getValue() == Integer.MAX_VALUE)
-                {
-                    childNode.setDistance(new Distance<>(pathWeight));
-                    parentNodeEdge = childNodeEdge;
-                    deQueue.add(parentNodeEdge);
+                Node<String,String,Integer> child = childEdge.getNode();
+                Distance<Integer> edgeWeightChild = childEdge.getDistance();
+                Integer pathWeight = edgeWeightParent.getValue() + edgeWeightChild.getValue();
+                if (pathWeight < child.getDistance().getValue()){
+                    child.setDistance( new Distance<>( pathWeight ) );
+                    if (deQueue.contains( childEdge )){
+                        enQueue.add( child );
+                    }
                 }
-
             }
-
-            enQueue.add(parentNode);
-            if (enQueue.contains(destinationNode)){
-                break;
-            }
+            enQueue.add( parent );
         }
-
-        log.info("\nPath Returned: {}", enQueue);
         return enQueue;
     }
 
+
+//    /**
+//     * Retrieve the edge with the minimum distance node.
+//     * @param nodes the list of node.
+//     * @return the node {@link Edge}<{@link Distance,Node}>with the lowest weight/cost edge.
+//     * @see Distance
+//     * @see Node
+//     */
+//    private Edge<Distance<T>, Node<T,T,T>> getMinimumDistanceNodeEdge(
+//            Queue<Edge<Distance<T>, Node<T,T,T>>> nodes){
+//        //////////////////////////////////////////////////////////////////
+//        Node<T,T,T> minimumDistanceNode = null;
+//        Distance<T> minimumDistance = (Distance<T>) new Distance<>(Integer.MAX_VALUE);
+//        // get the minimal distance node
+//        for (Edge<Distance<T>, Node<T,T,T>> n : nodes)
+//        {
+//            Integer nodeDistance = (Integer) n.getDistance().getValue();
+//            if( nodeDistance < (Integer) minimumDistance.getValue() )
+//            {
+//                minimumDistance = n.getDistance();
+//                minimumDistanceNode = n.getNode();
+//            }
+//        }
+//        log.info("\nGet Minimum Node: {} \nMinimum Distance: {} \n" +
+//                        "\nUnsettled Nodes: {} \n",
+//                minimumDistance, minimumDistanceNode, nodes );
+//
+//        return new Edge<>(minimumDistance,minimumDistanceNode);
+//    }
+
+
+    public static void main(String[] args)
+    {
+        try {
+            Long startTime = System.currentTimeMillis();
+            Node<String,String,Integer> nodeA = new Node<String,String,Integer>("A", "AA");
+            Node<String,String,Integer> nodeB = new Node<String,String,Integer>("B", "BB");
+            Node<String,String,Integer> nodeC = new Node<String,String,Integer>("C", "CC");
+            Node<String,String,Integer> nodeD = new Node<String,String,Integer>("D", "DD");
+            Node<String,String,Integer> nodeE = new Node<String,String,Integer>("E", "EE");
+            Node<String,String,Integer> nodeF = new Node<String,String,Integer>("F", "FF");
+            Node<String,String,Integer> nodeG = new Node<String,String,Integer>("G", "GG");
+            Node<String,String,Integer> nodeH = new Node<String,String,Integer>("H", "HH");
+            Node<String,String,Integer> nodeI = new Node<String,String,Integer>("I", "II");
+            Node<String,String,Integer> nodeJ = new Node<String,String,Integer>("J", "JJ");
+            Node<String,String,Integer> nodeK = new Node<String,String,Integer>("K", "KK");
+            Node<String,String,Integer> nodeL = new Node<String,String,Integer>("L", "LL");
+
+            nodeA.setCoordinate( new Coordinate<>(1,1));
+            nodeB.setCoordinate(new Coordinate<>(1,2));
+            nodeC.setCoordinate(new Coordinate<>(1,3));
+            nodeD.setCoordinate(new Coordinate<>(1,4));
+            nodeC.setCoordinate(new Coordinate<>(2,1));
+            nodeE.setCoordinate(new Coordinate<>(2,2));
+            nodeF.setCoordinate(new Coordinate<>(2,3));
+            nodeG.setCoordinate(new Coordinate<>(2,4));
+            nodeH.setCoordinate(new Coordinate<>(3,1));
+            nodeI.setCoordinate(new Coordinate<>(3,2));
+            nodeJ.setCoordinate(new Coordinate<>(3,3));
+            nodeK.setCoordinate(new Coordinate<>(3,4));
+            nodeL.setCoordinate(new Coordinate<>(4,1));
+
+
+            nodeA.addAdjacentNode(nodeB, new Distance<>(1));
+            nodeA.addAdjacentNode(nodeC, new Distance<>(1));
+            nodeB.addAdjacentNode(nodeD, new Distance<>(1));
+            nodeB.addAdjacentNode(nodeC, new Distance<>(1));
+            nodeC.addAdjacentNode(nodeA, new Distance<>(1));
+            nodeD.addAdjacentNode(nodeA, new Distance<>(1));
+            nodeD.addAdjacentNode(nodeG, new Distance<>(1));
+            nodeF.addAdjacentNode(nodeE, new Distance<>(1));
+            nodeF.addAdjacentNode(nodeI, new Distance<>(1));
+            nodeG.addAdjacentNode(nodeD, new Distance<>(1));
+            nodeG.addAdjacentNode(nodeJ, new Distance<>(1));
+            nodeH.addAdjacentNode(nodeL, new Distance<>(1));
+            nodeH.addAdjacentNode(nodeK, new Distance<>(1));
+            nodeI.addAdjacentNode(nodeG, new Distance<>(1));
+            nodeI.addAdjacentNode(nodeK, new Distance<>(1));
+            nodeJ.addAdjacentNode(nodeH, new Distance<>(2));
+            nodeJ.addAdjacentNode(nodeI, new Distance<>(4));
+            nodeK.addAdjacentNode(nodeH, new Distance<>(1));
+            nodeK.addAdjacentNode(nodeB, new Distance<>(1));
+            nodeL.addAdjacentNode(nodeJ, new Distance<>(5));
+            nodeL.addAdjacentNode(nodeD, new Distance<>(5));
+
+            Graph<Node<String,String,Integer>> graph = new Graph<Node<String,String,Integer>>();
+
+            graph.addNode(nodeA);
+            graph.addNode(nodeB);
+            graph.addNode(nodeC);
+            graph.addNode(nodeD);
+            graph.addNode(nodeE);
+            graph.addNode(nodeF);
+            graph.addNode(nodeG);
+            graph.addNode(nodeH);
+            graph.addNode(nodeI);
+            graph.addNode(nodeJ);
+            graph.addNode(nodeK);
+            graph.addNode(nodeL);
+            BreadthFirstSearch bfs = new BreadthFirstSearch();
+            Queue<Node<String,String,Integer>> results0 =  bfs
+                    .breadthFirstSearch(
+                            graph,
+                            new Distance<>(0),
+                            nodeA,
+                            nodeL);
+
+            nodeA.setShortestPath( results0.stream().collect(Collectors.toList()) );
+            Long results0EndTime = System.currentTimeMillis() - startTime;
+            log.info("\nRecursive Shortest Path 0:{} \nRuntime: {}\n", results0, results0EndTime);
+            boolean found = nodeL.equals(nodeA.getShortestPath().get(0));
+            log.info("\nNode Found: {}",found);
+
+        } catch (Exception e){
+            log.error(e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+
+    }
 }

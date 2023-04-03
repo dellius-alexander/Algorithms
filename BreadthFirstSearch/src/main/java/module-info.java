@@ -69,6 +69,7 @@ module BreadthFirstSearch {
     requires lombok;
     requires org.json;
     requires java.desktop;
+    requires Node;
     requires org.slf4j;
     requires Node;
     exports BreadthFirstSearch;
