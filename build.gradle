@@ -22,9 +22,9 @@ compileJava {
 }
 
 dependencies {
-    compileClasspath project(':Node')
-    compileClasspath project(':Dijkstra')
-    compileClasspath project(':BreadthFirstSearch')
+    api project(':Node')
+    api project(':Dijkstra')
+    api project(':BreadthFirstSearch')
     // Logging dependencies
     implementation 'org.slf4j:slf4j-api:2.0.3'
     implementation 'ch.qos.logback:logback-classic:1.4.4'
@@ -34,12 +34,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     testCompileOnly 'org.projectlombok:lombok:1.18.24'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
-
     testImplementation group: 'org.testng', name: 'testng', version: '7.6.0'
 
 }
-
-
 
 task tar(type: Tar ) {
     from ('../Algorithms') {

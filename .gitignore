@@ -10,3 +10,4 @@
 /**/*.log
 /**/gradle.properties
 /**/distro/
+/logs/

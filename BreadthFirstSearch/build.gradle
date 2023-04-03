@@ -12,7 +12,7 @@ implement breadth-first search as a call to BEST-FIRST-SEARCH where
 the evaluation function is the depth of the node—that is, the number 
 of actions it takes to reach the node.'''
 
-group = 'org.example'
+group = 'com.example'
 version = '1.0'
 
 configurations {
